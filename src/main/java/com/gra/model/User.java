@@ -30,12 +30,13 @@ public class User {
         this.kontaktet = new ArrayList<>();
     }
 
-    public User(int userId, String name, String email, String password) {
+    public User(int userId, String name, String email, String password, List<Role> roles) {
         this();
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roles=roles;
     }
 
     public boolean login(String email, String password) {

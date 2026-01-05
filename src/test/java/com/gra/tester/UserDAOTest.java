@@ -1,8 +1,11 @@
 package com.gra.tester;
 
 import com.gra.dao.UserDAO;
+import com.gra.model.Role;
 import com.gra.model.User;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +34,7 @@ public class UserDAOTest {
 
     @Test
     public void testSaveAndDelete() throws Exception {
-        User newUser = new User(0, "Test User", "new@example.com", "password", "CLIENT");
+        User newUser = new User(0, "Test User", "new@example.com", "password", List.of(new Role(1,"CLIENT"))); //test
         userDAO.save(newUser);
         User found = userDAO.findByEmail("new@example.com");
         assertNotNull(found);
