@@ -49,9 +49,9 @@ public class BiznesDAOTest {
         int alphaCategoryId = insertKategori("Alpha");
         int betaCategoryId = insertKategori("Beta");
 
-        int biznes1 = insertBiznes("Test Alpha", "Alpha"); // direct column
-        int biznes2 = insertBiznes("Test Gamma", (String)null);  // linked via join
-        int biznes3 = insertBiznes("Test Epsilon", "Epsilon");   // should NOT match
+        int biznes1 = insertBiznes("Test Alpha", "Alpha");
+        int biznes2 = insertBiznes("Test Gamma", (String)null);  // linked me join
+        int biznes3 = insertBiznes("Test Epsilon", "Epsilon");
 
         linkBiznesKategori(biznes2, betaCategoryId);
 
@@ -103,6 +103,8 @@ public class BiznesDAOTest {
         Biznes deleted = biznesDAO.findByNipt("testNipt12");
         assertNull(deleted);
     }
+
+
 
 
 
