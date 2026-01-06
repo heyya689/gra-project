@@ -81,8 +81,8 @@ public class RoleDAO {
     public void delete(int roleId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
-        // First delete from user_role table
-        String deleteUserRoleSql = "DELETE FROM user_role WHERE role_id=?";
+        // First delete FROM users_role table
+        String deleteUserRoleSql = "DELETE FROM users_role WHERE role_id=?";
         PreparedStatement ps1 = conn.prepareStatement(deleteUserRoleSql);
         ps1.setInt(1, roleId);
         ps1.executeUpdate();
@@ -98,7 +98,7 @@ public class RoleDAO {
         Connection conn = DBConnection.getInstance().getConnection();
 
         // Check if already assigned
-        String checkSql = "SELECT COUNT(*) FROM user_role WHERE user_id=? AND role_id=?";
+        String checkSql = "SELECT COUNT(*) FROM users_role WHERE user_id=? AND role_id=?";
         PreparedStatement checkPs = conn.prepareStatement(checkSql);
         checkPs.setInt(1, userId);
         checkPs.setInt(2, roleId);
@@ -116,7 +116,7 @@ public class RoleDAO {
 
     public void removeRoleFromUser(int userId, int roleId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "DELETE FROM user_role WHERE user_id=? AND role_id=?";
+        String sql = "DELETE FROM users_role WHERE user_id=? AND role_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, userId);
         ps.setInt(2, roleId);
@@ -142,7 +142,7 @@ public class RoleDAO {
     public List<User> findUsersByRoleId(int roleId) throws Exception {
         List<User> users = new ArrayList<>();
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT u.* FROM user u " +
+        String sql = "SELECT u.* FROM users u " +
                 "INNER JOIN user_role ur ON u.user_id = ur.user_id " +
                 "WHERE ur.role_id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);

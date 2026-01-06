@@ -11,9 +11,19 @@ public class DBConnection {
 
     private DBConnection() throws Exception {
         Properties props = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties")) {
+
+        String env = System.getProperty("env");
+        String propertiesFile = "application.properties";
+
+        if ("test".equals(env)) {
+            propertiesFile = "application-test.properties";
+        }
+
+        try (InputStream input = getClass().getClassLoader()
+                .getResourceAsStream(propertiesFile)) {
+
             if (input == null) {
-                throw new Exception("Nuk gjendet application.properties");
+                throw new Exception("Nuk gjendet " + propertiesFile);
             }
             props.load(input);
         }

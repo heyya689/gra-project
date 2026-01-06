@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-
+//test
     public User findById(int id) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM user WHERE user_id = ?";
+        String sql = "SELECT * FROM users WHERE user_id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -27,10 +27,10 @@ public class UserDAO {
         }
         return null;
     }
-
+//test
     public User findByEmail(String email) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM user WHERE email = ?";
+        String sql = "SELECT * FROM users WHERE email = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
@@ -42,12 +42,12 @@ public class UserDAO {
         }
         return null;
     }
-
+//test
     public List<User> findAll() throws Exception {
         List<User> users = new ArrayList<>();
         Connection conn = DBConnection.getInstance().getConnection();
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM user ORDER BY created_at DESC");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM users ORDER BY created_at DESC");
 
         while (rs.next()) {
             User user = mapResultSetToUser(rs);
@@ -55,11 +55,11 @@ public class UserDAO {
         }
         return users;
     }
-
+//test
     public List<User> findByRole(String role) throws Exception {
         List<User> users = new ArrayList<>();
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT u.* FROM user u " +
+        String sql = "SELECT u.* FROM users u " +
                 "INNER JOIN user_role ur ON u.user_id = ur.user_id " +
                 "INNER JOIN role r ON ur.role_id = r.role_id " +
                 "WHERE r.emri = ?";
@@ -72,12 +72,12 @@ public class UserDAO {
         }
         return users;
     }
-
+//test
     public void save(User user) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
         // Versioni pa 'phone'
-        String sql = "INSERT INTO user (name, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         ps.setString(1, user.getName());
@@ -98,10 +98,10 @@ public class UserDAO {
             savePreferenca(user.getPreferenca(), user.getUserId());
         }
     }
-
+//test
     public void update(User user) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "UPDATE user SET name=?, email=?, password=?, phone=?, updated_at=? WHERE user_id=?";
+        String sql = "UPDATE users SET name=?, email=?, password=?, phone=?, updated_at=? WHERE user_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, user.getName());
@@ -118,7 +118,7 @@ public class UserDAO {
             updatePreferenca(user.getPreferenca());
         }
     }
-
+//test
     public void delete(int userId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
@@ -126,7 +126,7 @@ public class UserDAO {
         deletePreferenca(userId);
 
         // Then delete user
-        String sql = "DELETE FROM user WHERE user_id=?";
+        String sql = "DELETE FROM users WHERE user_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, userId);
         ps.executeUpdate();
@@ -134,7 +134,7 @@ public class UserDAO {
 
     public boolean emailExists(String email) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
@@ -147,7 +147,7 @@ public class UserDAO {
 
     public int countUsers() throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT COUNT(*) FROM user";
+        String sql = "SELECT COUNT(*) FROM users";
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 

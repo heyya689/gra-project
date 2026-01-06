@@ -1,10 +1,16 @@
 package com.gra.tester;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+
 import com.gra.db.DBConnection;
+
+import java.io.InputStreamReader;
 import java.sql.*;
 import com.gra.dao.BiznesDAO;
 
 import com.gra.model.Biznes;
+import org.h2.tools.RunScript;
 import org.junit.jupiter.api.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,22 +22,54 @@ public class BiznesDAOTest {
     private BiznesDAO biznesDAO;
 
     @BeforeAll
+    static void initDatabase() throws Exception {
+        System.setProperty("env", "test");
+
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        RunScript.execute(
+                conn,
+                new InputStreamReader(
+                        BiznesDAOTest.class
+                                .getClassLoader()
+                                .getResourceAsStream("schema.sql")
+                )
+        );
+    }
+
+    @BeforeAll
     public void setup() throws Exception {
+        System.setProperty("env", "test");
         biznesDAO = new BiznesDAO();
+    }
+
+
+    @AfterEach
+    void cleanDatabase() throws Exception {
+        Connection conn = DBConnection.getInstance().getConnection();
+        conn.createStatement().execute("DELETE FROM biznes_lokacion");
+        conn.createStatement().execute("DELETE FROM lokacion");
+        conn.createStatement().execute("DELETE FROM biznes");
+    }
+
+    @AfterAll
+    static void tearDown() {
+        System.clearProperty("env");
     }
 
     @Test
     public void testFindById() throws Exception {
-        Biznes biznes = biznesDAO.findById(1);
-        assertNotNull(biznes);
-        assertEquals(1, biznes.getBiznesId());
+        int id= insertBiznes("Test");
+        Biznes b = biznesDAO.findById(id);
+        assertEquals(id, b.getBiznesId());
     }
 
     @Test
     public void testFindByNipt() throws Exception {
-        Biznes biznes = biznesDAO.findByNipt("K123456789");
-        assertNotNull(biznes);
-        assertEquals("K123456789", biznes.getNipt());
+        int id= insertBiznesWithNipt("Test", "TEST-NIPT" );
+        Biznes b = biznesDAO.findById(id);
+
+        assertEquals("TEST-NIPT", b.getNipt());
     }
 
     @Test
@@ -94,15 +132,105 @@ public class BiznesDAOTest {
         assertEquals("Super Alpha Shop", result.get(1).getEmri());
     }
 
-    public void testSaveAndDelete() throws Exception{
-        Biznes newBiznes=new Biznes(100, "Test", "testNipt12");
+    @Test
+    public void testSaveAndDelete() throws Exception {
+        Biznes newBiznes = new Biznes();
+        newBiznes.setEmri("Test Biznes");
+        newBiznes.setNipt("TEST-NIPT");
+
+        // save
         biznesDAO.save(newBiznes);
-        Biznes found=biznesDAO.findByNipt("testNipt12");
+
+        // assert - saved
+        Biznes found = biznesDAO.findByNipt("TEST-NIPT");
         assertNotNull(found);
+        assertEquals("Test Biznes", found.getEmri());
+
+        // delete
         biznesDAO.delete(found.getBiznesId());
-        Biznes deleted = biznesDAO.findByNipt("testNipt12");
+
+        // assert - deleted
+        Biznes deleted = biznesDAO.findByNipt("TEST-NIPT");
         assertNull(deleted);
     }
+
+    @Test
+    void testUpdateBiznes() throws Exception {
+
+        Biznes b = new Biznes();
+        b.setEmri("Old Name");
+        b.setPershkrim("Old Desc");
+        b.setKategori("Old Cat");
+        b.setNipt("UPD-001");
+        b.setLicense("Old License");
+        b.setTelefon("111111");
+        b.setEmail("old@test.com");
+        b.setWebsite("old.com");
+
+        biznesDAO.save(b);
+
+        // fetch biznes
+        Biznes saved = biznesDAO.findByNipt("UPD-001");
+        assertNotNull(saved);
+
+        // modifikojme fushat
+        saved.setEmri("New Name");
+        saved.setPershkrim("New Description");
+        saved.setKategori("New Category");
+        saved.setLicense("New License");
+        saved.setTelefon("999999");
+        saved.setEmail("new@test.com");
+        saved.setWebsite("new.com");
+
+        biznesDAO.update(saved);
+
+        Biznes updated = biznesDAO.findById(saved.getBiznesId());
+
+        assertNotNull(updated);
+        assertEquals("New Name", updated.getEmri());
+        assertEquals("New Description", updated.getPershkrim());
+        assertEquals("New Category", updated.getKategori());
+        assertEquals("New License", updated.getLicense());
+        assertEquals("999999", updated.getTelefon());
+        assertEquals("new@test.com", updated.getEmail());
+        assertEquals("new.com", updated.getWebsite());
+    }
+
+    @Test
+    void testNiptExists() throws Exception {
+
+        Biznes b = new Biznes();
+        b.setEmri("Biz 1");
+        b.setNipt("EXIST-123");
+
+        biznesDAO.save(b);
+
+        assertTrue(biznesDAO.niptExists("EXIST-123"));
+        assertFalse(biznesDAO.niptExists("NOT-EXIST"));
+    }
+
+    @Test
+    void testCountBusinesses() throws Exception {
+
+        int initialCount = biznesDAO.countBusinesses();
+
+        Biznes b1 = new Biznes();
+        b1.setEmri("Biz 1");
+        b1.setNipt("CNT-1");
+        biznesDAO.save(b1);
+
+        Biznes b2 = new Biznes();
+        b2.setEmri("Biz 2");
+        b2.setNipt("CNT-2");
+        biznesDAO.save(b2);
+
+        int finalCount = biznesDAO.countBusinesses();
+
+        assertEquals(initialCount + 2, finalCount);
+    }
+
+
+
 
 
 
@@ -115,10 +243,12 @@ public class BiznesDAOTest {
     private int insertBiznes(String emri) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO biznes (emri) VALUES (?)",
+                "INSERT INTO biznes (emri, nipt) VALUES (?, ?)",
                 Statement.RETURN_GENERATED_KEYS
         );
         ps.setString(1, emri);
+        ps.setString(2, "TEST-NIPT-" + System.nanoTime());
+
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
@@ -127,13 +257,45 @@ public class BiznesDAOTest {
 
     private void insertBiznes(String name, LocalDateTime createdAt) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "INSERT INTO biznes (name, created_at) VALUES (?, ?)";
+        String sql = "INSERT INTO biznes (emri, nipt, created_at) VALUES (?,?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, name);
-        ps.setTimestamp(2, Timestamp.valueOf(createdAt));
+        ps.setString(2, "TEST-NIPT-" + System.nanoTime());
+        ps.setTimestamp(3, Timestamp.valueOf(createdAt));
         ps.executeUpdate();
     }
+
+    private int insertBiznes(String emri, String kategori) throws Exception {
+        Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO biznes (emri, nipt, kategori) VALUES (?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+        );
+        ps.setString(1, emri);
+        ps.setString(2, "TEST-NIPT-" + System.nanoTime());
+        ps.setString(3, kategori);
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        return rs.getInt(1);
+    }
+
+    private int insertBiznesWithNipt(String emri, String nipt) throws Exception {
+        Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO biznes (emri, nipt) VALUES (?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+        );
+        ps.setString(1, emri);
+        ps.setString(2, nipt);
+        ps.executeUpdate();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        return rs.getInt(1);
+    }
+
 
     private int insertKategori(String emri) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
@@ -148,19 +310,6 @@ public class BiznesDAOTest {
         return rs.getInt(1);
     }
 
-    private int insertBiznes(String emri, String kategori) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO biznes (emri, kategori) VALUES (?, ?)",
-                Statement.RETURN_GENERATED_KEYS
-        );
-        ps.setString(1, emri);
-        ps.setString(2, kategori);
-        ps.executeUpdate();
-        ResultSet rs = ps.getGeneratedKeys();
-        rs.next();
-        return rs.getInt(1);
-    }
 
     private void linkBiznesKategori(int biznesId, int kategoriId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
