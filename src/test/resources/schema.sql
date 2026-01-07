@@ -1,6 +1,7 @@
 -- =========================
 -- USER & ROLE
 -- =========================
+--DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
                       user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -12,6 +13,8 @@ CREATE TABLE users (
                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+--DROP TABLE IF EXISTS role;
+
 CREATE TABLE role (
                       role_id INT AUTO_INCREMENT PRIMARY KEY,
                       emri VARCHAR(50) NOT NULL,
@@ -20,6 +23,7 @@ CREATE TABLE role (
                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+--DROP TABLE IF EXISTS user_role;
 CREATE TABLE user_role (
                            user_id INT,
                            role_id INT,
@@ -32,7 +36,7 @@ CREATE TABLE user_role (
 -- =========================
 -- BIZNES
 -- =========================
-
+--DROP TABLE IF EXISTS biznes;
 CREATE TABLE biznes (
                         biznes_id INT AUTO_INCREMENT PRIMARY KEY,
                         emri VARCHAR(100) NOT NULL,
@@ -46,7 +50,7 @@ CREATE TABLE biznes (
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+--DROP TABLE IF EXISTS biznes_imazhe;
 CREATE TABLE biznes_imazhe (
                                imazh_id INT AUTO_INCREMENT PRIMARY KEY,
                                biznes_id INT NOT NULL,
@@ -61,7 +65,7 @@ CREATE TABLE biznes_imazhe (
 -- =========================
 -- KATEGORI
 -- =========================
-
+--DROP TABLE IF EXISTS kategori;
 CREATE TABLE kategori (
                           kategori_id INT AUTO_INCREMENT PRIMARY KEY,
                           emri VARCHAR(100) NOT NULL,
@@ -69,7 +73,7 @@ CREATE TABLE kategori (
                           pershkrim TEXT,
                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+--DROP TABLE IF EXISTS biznes_kategori;
 CREATE TABLE biznes_kategori (
                                  biznes_id INT,
                                  kategori_id INT,
@@ -81,7 +85,7 @@ CREATE TABLE biznes_kategori (
 -- =========================
 -- LOKACION
 -- =========================
-
+--DROP TABLE IF EXISTS lokacion;
 CREATE TABLE lokacion (
                           lokacion_id INT AUTO_INCREMENT PRIMARY KEY,
                           qyteti VARCHAR(100) NOT NULL,
@@ -93,7 +97,7 @@ CREATE TABLE lokacion (
                           longitude DECIMAL(11,8),
                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+--DROP TABLE IF EXISTS biznes_lokacion;
 CREATE TABLE biznes_lokacion (
                                  biznes_id INT,
                                  lokacion_id INT,
@@ -105,7 +109,7 @@ CREATE TABLE biznes_lokacion (
 -- =========================
 -- INVENTARI
 -- =========================
-
+--DROP TABLE IF EXISTS inventari;
 CREATE TABLE inventari (
                            inventar_id INT AUTO_INCREMENT PRIMARY KEY,
                            biznes_id INT NOT NULL,
@@ -125,6 +129,7 @@ CREATE TABLE inventari (
 -- FAQ
 -- =========================
 
+--DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
                      faq_id INT AUTO_INCREMENT PRIMARY KEY,
                      pyetje TEXT NOT NULL,
@@ -134,6 +139,7 @@ CREATE TABLE faq (
                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+--DROP TABLE IF EXISTS faqja_kategori;
 CREATE TABLE faqja_kategori (
                                 kategori_id INT AUTO_INCREMENT PRIMARY KEY,
                                 emri VARCHAR(100) NOT NULL,
@@ -141,7 +147,7 @@ CREATE TABLE faqja_kategori (
                                 renditja INT DEFAULT 0,
                                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+--DROP TABLE IF EXISTS faq_kategori;
 CREATE TABLE faq_kategori (
                               faq_id INT,
                               kategori_id INT,
@@ -153,7 +159,7 @@ CREATE TABLE faq_kategori (
 -- =========================
 -- REZERVIM & PAGESA
 -- =========================
-
+--DROP TABLE IF EXISTS rezervim;
 CREATE TABLE rezervim (
                           rezervim_id INT AUTO_INCREMENT PRIMARY KEY,
                           user_id INT NOT NULL,
@@ -169,7 +175,7 @@ CREATE TABLE rezervim (
                           FOREIGN KEY (biznes_id) REFERENCES biznes(biznes_id),
                           FOREIGN KEY (inventar_id) REFERENCES inventari(inventar_id)
 );
-
+--DROP TABLE IF EXISTS pagesat;
 CREATE TABLE pagesat (
                          pagesa_id INT AUTO_INCREMENT PRIMARY KEY,
                          rezervim_id INT NOT NULL,
@@ -181,7 +187,7 @@ CREATE TABLE pagesat (
                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                          FOREIGN KEY (rezervim_id) REFERENCES rezervim(rezervim_id)
 );
-
+--DROP TABLE IF EXISTS pagesat_detaje;
 CREATE TABLE pagesat_detaje (
                                 detaje_id INT AUTO_INCREMENT PRIMARY KEY,
                                 pagesa_id INT NOT NULL,
@@ -195,7 +201,7 @@ CREATE TABLE pagesat_detaje (
                                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                 FOREIGN KEY (pagesa_id) REFERENCES pagesat(pagesa_id) ON DELETE CASCADE
 );
-
+--DROP TABLE IF EXISTS pagesat_historik;
 CREATE TABLE pagesat_historik (
                                   historik_id INT AUTO_INCREMENT PRIMARY KEY,
                                   pagesa_id INT NOT NULL,
@@ -208,7 +214,7 @@ CREATE TABLE pagesat_historik (
 -- =========================
 -- PREFERENCA, NOTIFIKIME, KONTAKT
 -- =========================
-
+--DROP TABLE IF EXISTS preferenca;
 CREATE TABLE preferenca (
                             preferenca_id INT AUTO_INCREMENT PRIMARY KEY,
                             user_id INT NOT NULL,
@@ -221,7 +227,7 @@ CREATE TABLE preferenca (
                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (user_id) references users(user_id) ON DELETE CASCADE
 );
-
+--DROP TABLE IF EXISTS notifikime;
 CREATE TABLE notifikime (
                             njoftim_id INT AUTO_INCREMENT PRIMARY KEY,
                             user_id INT NOT NULL,
@@ -232,7 +238,7 @@ CREATE TABLE notifikime (
                             data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (user_id) references users(user_id)
 );
-
+--DROP TABLE IF EXISTS kontakt;
 CREATE TABLE kontakt (
                          kontakt_id INT AUTO_INCREMENT PRIMARY KEY,
                          user_id INT NOT NULL,
@@ -248,7 +254,7 @@ CREATE TABLE kontakt (
 -- =========================
 -- VLERESIM
 -- =========================
-
+--DROP TABLE IF EXISTS vleresim;
 CREATE TABLE vleresim (
                           vleresim_id INT AUTO_INCREMENT PRIMARY KEY,
                           user_id INT NOT NULL,

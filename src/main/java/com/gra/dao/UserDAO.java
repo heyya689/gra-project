@@ -101,15 +101,15 @@ public class UserDAO {
 //test
     public void update(User user) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "UPDATE users SET name=?, email=?, password=?, phone=?, updated_at=? WHERE user_id=?";
+        String sql = "UPDATE users SET name=?, email=?, password=?, phone=? WHERE user_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, user.getName());
         ps.setString(2, user.getEmail());
         ps.setString(3, user.getPassword());
         ps.setString(4, user.getPhone());
-        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-        ps.setInt(6, user.getUserId());
+        //ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setInt(5, user.getUserId());
 
         ps.executeUpdate();
 

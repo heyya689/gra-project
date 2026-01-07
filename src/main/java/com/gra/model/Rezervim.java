@@ -9,7 +9,7 @@ public class Rezervim {
     private Inventari inventar;
     private LocalDateTime data;
     private int numriPersonave;
-    private String shënime;
+    private String shenime;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -51,7 +51,7 @@ public class Rezervim {
         if (status.equals("CONFIRMED")) {
             this.status = "COMPLETED";
             this.updatedAt = LocalDateTime.now();
-            System.out.println("Rezervimi u shënuar si i përfunduar.");
+            System.out.println("Rezervimi u shen uar si i përfunduar.");
         }
     }
 
@@ -86,8 +86,8 @@ public class Rezervim {
     public int getNumriPersonave() { return numriPersonave; }
     public void setNumriPersonave(int numriPersonave) { this.numriPersonave = numriPersonave; }
 
-    public String getShënime() { return shënime; }
-    public void setShënime(String shënime) { this.shënime = shënime; }
+    public String getShenime() { return shenime; }
+    public void setShenime(String shenime) { this.shenime = shenime; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) {

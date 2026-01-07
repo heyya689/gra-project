@@ -120,7 +120,7 @@ public class RezervimDAO {
     public void save(Rezervim rezervim) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "INSERT INTO rezervim (user_id, biznes_id, inventar_id, data, " +
-                "numri_personave, shënime, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "numri_personave, shenime, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         ps.setInt(1, rezervim.getUser().getUserId());
@@ -134,7 +134,7 @@ public class RezervimDAO {
 
         ps.setTimestamp(4, Timestamp.valueOf(rezervim.getData()));
         ps.setInt(5, rezervim.getNumriPersonave());
-        ps.setString(6, rezervim.getShënime());
+        ps.setString(6, rezervim.getShenime());
         ps.setString(7, rezervim.getStatus());
 
         ps.executeUpdate();
@@ -155,7 +155,7 @@ public class RezervimDAO {
     public void update(Rezervim rezervim) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "UPDATE rezervim SET user_id=?, biznes_id=?, inventar_id=?, data=?, " +
-                "numri_personave=?, shënime=?, status=?, updated_at=? WHERE rezervim_id=?";
+                "numri_personave=?, shenime=?, status=?, updated_at=? WHERE rezervim_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setInt(1, rezervim.getUser().getUserId());
@@ -169,7 +169,7 @@ public class RezervimDAO {
 
         ps.setTimestamp(4, Timestamp.valueOf(rezervim.getData()));
         ps.setInt(5, rezervim.getNumriPersonave());
-        ps.setString(6, rezervim.getShënime());
+        ps.setString(6, rezervim.getShenime());
         ps.setString(7, rezervim.getStatus());
         ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
         ps.setInt(9, rezervim.getRezervimId());
@@ -271,7 +271,7 @@ public class RezervimDAO {
 
         rezervim.setData(rs.getTimestamp("data").toLocalDateTime());
         rezervim.setNumriPersonave(rs.getInt("numri_personave"));
-        rezervim.setShënime(rs.getString("shënime"));
+        rezervim.setShenime(rs.getString("shenime"));
         rezervim.setStatus(rs.getString("status"));
         rezervim.setCreatedAt(rs.getTimestamp("created_at") != null ?
                 rs.getTimestamp("created_at").toLocalDateTime() : null);

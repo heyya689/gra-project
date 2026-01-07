@@ -742,7 +742,7 @@ public class MainApp {
             reservation.setBiznes(biznes);
             reservation.setData(java.time.LocalDateTime.parse(dateTime.replace(" ", "T")));
             reservation.setNumriPersonave(numberOfPeople);
-            reservation.setShënime(notes);
+            reservation.setShenime(notes);
             reservation.setStatus("PENDING");
 
             rezervimDAO.save(reservation);
