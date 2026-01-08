@@ -3,19 +3,24 @@ package com.gra.dao;
 import com.gra.db.DBConnection;
 import com.gra.model.Kategori;
 import com.gra.model.Biznes;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class KategoriDAO {
 
     private BiznesDAO biznesDAO;
+    private Scanner scanner;
 
     public KategoriDAO() {
         this.biznesDAO = new BiznesDAO();
+        this.scanner = new Scanner(System.in);
     }
 
+    // ==================== FIND ====================
     public Kategori findById(int id) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM kategori WHERE kategori_id = ?";
@@ -26,7 +31,7 @@ public class KategoriDAO {
         if (rs.next()) {
             Kategori kategori = mapResultSetToKategori(rs);
 
-            // Load businesses in this category
+            // Ngarko bizneset e kësaj kategorie
             kategori.setBizneset(findBiznesetByKategoriId(kategori.getKategoriId()));
 
             return kategori;
@@ -77,6 +82,7 @@ public class KategoriDAO {
         return kategorite;
     }
 
+    // ==================== SAVE / UPDATE / DELETE ====================
     public void save(Kategori kategori) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "INSERT INTO kategori (emri, ikona, pershkrim) VALUES (?, ?, ?)";
@@ -110,48 +116,52 @@ public class KategoriDAO {
     public void delete(int kategoriId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
-        // First delete from biznes_kategori
+        // Fshi lidhjet në biznes_kategori
         String deleteLinkSql = "DELETE FROM biznes_kategori WHERE kategori_id=?";
         PreparedStatement deleteLinkPs = conn.prepareStatement(deleteLinkSql);
         deleteLinkPs.setInt(1, kategoriId);
         deleteLinkPs.executeUpdate();
 
-        // Then delete category
+        // Fshi kategorinë
         String sql = "DELETE FROM kategori WHERE kategori_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, kategoriId);
         ps.executeUpdate();
     }
 
+    // ==================== BUSINESS LINK ====================
     public void addBusinessToCategory(int kategoriId, int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
-        // Check if already linked
-        String checkSql = "SELECT COUNT(*) FROM biznes_kategori WHERE kategori_id=? AND biznes_id=?";
+        // Kontrollo nëse ekziston lidhja
+        String checkSql = "SELECT COUNT(*) FROM biznes_kategori WHERE biznes_id=? AND kategori_id=?";
         PreparedStatement checkPs = conn.prepareStatement(checkSql);
-        checkPs.setInt(1, kategoriId);
-        checkPs.setInt(2, biznesId);
+        checkPs.setInt(1, biznesId);
+        checkPs.setInt(2, kategoriId);
         ResultSet rs = checkPs.executeQuery();
 
         if (rs.next() && rs.getInt(1) == 0) {
-            // Not linked, insert new
-            String sql = "INSERT INTO biznes_kategori (kategori_id, biznes_id) VALUES (?, ?)";
+            String sql = "INSERT INTO biznes_kategori (biznes_id, kategori_id) VALUES (?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, kategoriId);
-            ps.setInt(2, biznesId);
-            ps.executeUpdate();
+            ps.setInt(1, biznesId);
+            ps.setInt(2, kategoriId);
+            int rows = ps.executeUpdate();
+            System.out.println("DEBUG [KategoriDAO]: Lidhja u shtua - Biznes ID: " + biznesId + ", Kategori ID: " + kategoriId + ", Rreshta: " + rows);
+        } else {
+            System.out.println("DEBUG [KategoriDAO]: Lidhja ekziston tashmë!");
         }
     }
 
     public void removeBusinessFromCategory(int kategoriId, int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "DELETE FROM biznes_kategori WHERE kategori_id=? AND biznes_id=?";
+        String sql = "DELETE FROM biznes_kategori WHERE biznes_id=? AND kategori_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, kategoriId);
-        ps.setInt(2, biznesId);
+        ps.setInt(1, biznesId);
+        ps.setInt(2, kategoriId);
         ps.executeUpdate();
     }
 
+    // ==================== COUNTS / SEARCH ====================
     public int countCategories() throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT COUNT(*) FROM kategori";
@@ -191,28 +201,57 @@ public class KategoriDAO {
         return kategorite;
     }
 
-    private List<Biznes> findBiznesetByKategoriId(int kategoriId) throws Exception {
-        List<Biznes> bizneset = new ArrayList<>();
+    // ==================== FIND BUSINESSES IN CATEGORY ====================
+    public List<Biznes> findBiznesetByKategoriId(int kategoriId) throws Exception {
+        List<Biznes> businesses = new ArrayList<>();
         Connection conn = DBConnection.getInstance().getConnection();
+
         String sql = "SELECT b.* FROM biznes b " +
                 "INNER JOIN biznes_kategori bk ON b.biznes_id = bk.biznes_id " +
-                "WHERE bk.kategori_id = ? ORDER BY b.emri";
+                "WHERE bk.kategori_id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, kategoriId);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            Biznes biznes = new Biznes();
-            biznes.setBiznesId(rs.getInt("biznes_id"));
-            biznes.setEmri(rs.getString("emri"));
-            biznes.setPershkrim(rs.getString("pershkrim"));
-            biznes.setKategori(rs.getString("kategori"));
-            biznes.setNipt(rs.getString("nipt"));
-            bizneset.add(biznes);
+            Biznes b = biznesDAO.mapResultSetToBiznes(rs);
+            businesses.add(b);
         }
-        return bizneset;
+
+        return businesses;
     }
 
+    // ==================== DISPLAY BUSINESSES ====================
+    public void showBusinessesInCategory() {
+        try {
+            System.out.print("\nShkruaj ID-në e kategorisë: ");
+            int categoryId = Integer.parseInt(scanner.nextLine());
+
+            Kategori kategori = findById(categoryId);
+            if (kategori == null) {
+                System.out.println("❌ Kategoria nuk u gjet!");
+                return;
+            }
+
+            List<Biznes> businesses = kategori.getBizneset();
+
+            if (businesses == null || businesses.isEmpty()) {
+                System.out.println("Nuk ka biznese në kategorinë: " + kategori.getEmri());
+            } else {
+                System.out.println("\n=== BIZNESET E KATEGORISË: " + kategori.getEmri() + " ===");
+                for (Biznes b : businesses) {
+                    System.out.printf("ID: %d | Emri: %s | NIPT: %s | Email: %s\n",
+                            b.getBiznesId(), b.getEmri(), b.getNipt(),
+                            b.getEmail() != null ? b.getEmail() : "N/A");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Gabim: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // ==================== MAPPER ====================
     private Kategori mapResultSetToKategori(ResultSet rs) throws SQLException {
         Kategori kategori = new Kategori();
         kategori.setKategoriId(rs.getInt("kategori_id"));

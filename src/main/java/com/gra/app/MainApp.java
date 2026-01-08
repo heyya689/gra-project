@@ -2,6 +2,8 @@ package com.gra.app;
 
 import com.gra.dao.*;
 import com.gra.model.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -207,42 +209,65 @@ public class MainApp {
     private static void createNewBusiness() {
         try {
             System.out.println("\n=== KRIJIMI I BIZNESIT TË RI ===");
+            Biznes b = new Biznes();
 
             System.out.print("Emri i biznesit: ");
-            String emri = scanner.nextLine();
+            b.setEmri(scanner.nextLine());
 
             System.out.print("NIPT: ");
-            String nipt = scanner.nextLine();
+            b.setNipt(scanner.nextLine());
 
-            System.out.print("Kategoria: ");
-            String kategori = scanner.nextLine();
+            // Listojmë kategoritë që përdoruesi të zgjedhë ID-në e saktë
+            System.out.println("\nZgjidh ID-në e Kategorisë:");
+            List<Kategori> katLista = kategoriDAO.findAll();
+            for(Kategori k : katLista) {
+                System.out.println(k.getKategoriId() + ". " + k.getEmri() + " (" + k.getPershkrim() + ")");
+            }
 
-            System.out.print("Pershkrim (opsional): ");
-            String pershkrim = scanner.nextLine();
+            System.out.print("\nShkruaj ID-në e zgjedhur: ");
+            int selectedKatId = Integer.parseInt(scanner.nextLine());
 
-            System.out.print("License (opsional): ");
-            String license = scanner.nextLine();
+            Kategori katSelected = kategoriDAO.findById(selectedKatId);
+            if (katSelected == null) {
+                System.out.println("❌ ID e pasaktë! Kategoria nuk ekziston.");
+                return;
+            }
 
-            System.out.print("Telefon: ");
-            String telefon = scanner.nextLine();
+            // Vendosim emrin e kategorisë si tekst te biznesi
+            b.setKategori(katSelected.getEmri());
+
+            System.out.print("Pershkrim (opsionale): ");
+            b.setPershkrim(scanner.nextLine());
 
             System.out.print("Email: ");
-            String email = scanner.nextLine();
+            b.setEmail(scanner.nextLine());
 
-            Biznes newBiznes = new Biznes();
-            newBiznes.setEmri(emri);
-            newBiznes.setNipt(nipt);
-            newBiznes.setKategori(kategori);
-            newBiznes.setPershkrim(pershkrim);
-            newBiznes.setLicense(license);
-            newBiznes.setTelefon(telefon);
-            newBiznes.setEmail(email);
+            System.out.print("Telefon: ");
+            b.setTelefon(scanner.nextLine());
 
-            biznesDAO.save(newBiznes);
+            System.out.print("Website (opsionale): ");
+            b.setWebsite(scanner.nextLine());
 
-            System.out.println("✅ Biznesi u krijua me sukses! ID: " + newBiznes.getBiznesId());
+            System.out.println("\nDuke ruajtur biznesin...");
+
+            // Thërrasim metodën e re save me kategoriId
+            biznesDAO.save(b, selectedKatId);
+
+            // Verifikim shtesë: shto lidhjen përmes KategoriDAO gjithashtu
+            System.out.println("Duke verifikuar lidhjen...");
+            kategoriDAO.addBusinessToCategory(selectedKatId, b.getBiznesId());
+
+            System.out.println("\n✅ Biznesi u ruajt me sukses!");
+            System.out.println("ID e biznesit: " + b.getBiznesId());
+            System.out.println("Kategoria: " + katSelected.getEmri());
+
+            // Verifikimi i menjëhershëm
+            System.out.println("\n📋 Verifikim i menjëhershëm:");
+            List<Biznes> biznesetNeKategori = kategoriDAO.findBiznesetByKategoriId(selectedKatId);
+            System.out.println("Numri i bizneseve në këtë kategori: " + biznesetNeKategori.size());
+
         } catch (Exception e) {
-            System.err.println("Gabim: " + e.getMessage());
+            System.err.println("❌ Gabim: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -403,6 +428,8 @@ public class MainApp {
             e.printStackTrace();
         }
     }
+
+
 
     private static void runDemo() {
         System.out.println("\n🎬 DEMO I SISTEMIT GRA");
@@ -1013,10 +1040,10 @@ public class MainApp {
 
             List<Biznes> businesses = kategori.getBizneset();
 
-            if (businesses.isEmpty()) {
+            if (businesses == null || businesses.isEmpty()) {
                 System.out.println("Nuk ka biznese në këtë kategori.");
             } else {
-                System.out.println("\n=== BIZNESET E KATEGORISË: " + kategori.getDisplayName() + " ===");
+                System.out.println("\n=== BIZNESET E KATEGORISË: " + kategori.getEmri() + " ===");
                 System.out.printf("%-5s %-25s %-15s %-20s\n", "ID", "Emri", "NIPT", "Email");
                 System.out.println("-------------------------------------------------------------------");
 
@@ -1034,4 +1061,5 @@ public class MainApp {
             e.printStackTrace();
         }
     }
+
 }

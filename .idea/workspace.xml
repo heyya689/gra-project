@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="UI ADDED">
+    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="MODEL TESTING">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/app/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/app/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/dao/BiznesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/dao/BiznesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/dao/KategoriDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/dao/KategoriDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/services/UserSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/services/UserSolver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,31 +53,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SimpleTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TestApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TestConnection.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TestXAMPPConnection.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andia/IdeaProjects/gra-project/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.KontaktTest.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainApp.executor": "Coverage",
+    "Application.SimpleTest.executor": "Run",
+    "Application.TestApp.executor": "Run",
+    "Application.TestConnection.executor": "Run",
+    "Application.TestXAMPPConnection.executor": "Run",
+    "Application.VleresimTest.executor": "Run",
+    "JUnit.BiznesImazheDAOTest.executor": "Run",
+    "JUnit.FAQDAOTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/andia/IdeaProjects/gra-project/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\andia\IdeaProjects\gra-project\src\ui" />
@@ -128,7 +136,7 @@
       <workItem from="1765571318255" duration="17000" />
       <workItem from="1765571376065" duration="124000" />
       <workItem from="1767871838796" duration="2463000" />
-      <workItem from="1767874349015" duration="3193000" />
+      <workItem from="1767874349015" duration="11533000" />
     </task>
     <task id="LOCAL-00001" summary="KEJDA_INITIAL STRUCTURE">
       <option name="closed" value="true" />
@@ -146,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767876822533</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="MODEL TESTING">
+      <option name="closed" value="true" />
+      <created>1767878290384</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1767878290384</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +184,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="KEJDA_INITIAL STRUCTURE" />
     <MESSAGE value="UI ADDED" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI ADDED" />
+    <MESSAGE value="MODEL TESTING" />
+    <option name="LAST_COMMIT_MESSAGE" value="MODEL TESTING" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -183,7 +200,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/gra_project$MainApp.ic" NAME="MainApp Coverage Results" MODIFIED="1765571396446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/gra_project$MainApp.ic" NAME="MainApp Coverage Results" MODIFIED="1767886706552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.gra.app.*</FILTER>
     </SUITE>
   </component>

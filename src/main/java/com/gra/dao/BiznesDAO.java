@@ -4,6 +4,7 @@ import com.gra.db.DBConnection;
 import com.gra.model.Biznes;
 import com.gra.model.Lokacion;
 import com.gra.model.Kategori;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class BiznesDAO {
 
+    // ==================== FIND ====================
     public Biznes findById(int id) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM biznes WHERE biznes_id = ?";
@@ -57,18 +59,13 @@ public class BiznesDAO {
         return businesses;
     }
 
-    public List<Biznes> findByCategory(String category) throws Exception {
+    public List<Biznes> findByCategory(String categoryName) throws Exception {
         List<Biznes> businesses = new ArrayList<>();
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT b.* FROM biznes b " +
-                "WHERE b.kategori = ? OR EXISTS (" +
-                "  SELECT 1 FROM biznes_kategori bk " +
-                "  INNER JOIN kategori k ON bk.kategori_id = k.kategori_id " +
-                "  WHERE bk.biznes_id = b.biznes_id AND k.emri = ?" +
-                ") ORDER BY b.emri";
+                "WHERE b.kategori LIKE ? ORDER BY b.emri";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, category);
-        ps.setString(2, category);
+        ps.setString(1, "%" + categoryName + "%");
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -77,77 +74,52 @@ public class BiznesDAO {
         return businesses;
     }
 
-    public List<Biznes> findByCity(String city) throws Exception {
-        List<Biznes> businesses = new ArrayList<>();
+    // ==================== SAVE ====================
+    public void save(Biznes biznes, int kategoriId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT b.* FROM biznes b " +
-                "INNER JOIN biznes_lokacion bl ON b.biznes_id = bl.biznes_id " +
-                "INNER JOIN lokacion l ON bl.lokacion_id = l.lokacion_id " +
-                "WHERE l.qyteti = ? ORDER BY b.emri";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, city);
-        ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            businesses.add(mapResultSetToBiznes(rs));
-        }
-        return businesses;
-    }
+        try {
+            conn.setAutoCommit(false); // Fillojmë një transaksion
 
-    public List<Biznes> searchByName(String name) throws Exception {
-        List<Biznes> businesses = new ArrayList<>();
-        Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM biznes WHERE emri LIKE ? ORDER BY emri";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, "%" + name + "%");
-        ResultSet rs = ps.executeQuery();
+            // Save biznes
+            String sql = "INSERT INTO biznes (emri, pershkrim, kategori, nipt, license, telefon, email, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, biznes.getEmri());
+            ps.setString(2, biznes.getPershkrim());
+            ps.setString(3, biznes.getKategori());
+            ps.setString(4, biznes.getNipt());
+            ps.setString(5, biznes.getLicense());
+            ps.setString(6, biznes.getTelefon());
+            ps.setString(7, biznes.getEmail());
+            ps.setString(8, biznes.getWebsite());
+            ps.executeUpdate();
 
-        while (rs.next()) {
-            businesses.add(mapResultSetToBiznes(rs));
-        }
-        return businesses;
-    }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int newBiznesId = rs.getInt(1);
+                biznes.setBiznesId(newBiznesId);
 
-    public void save(Biznes biznes) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "INSERT INTO biznes (emri, pershkrim, kategori, nipt, license, " +
-                "telefon, email, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                // Link with category
+                addKategoriToBiznes(newBiznesId, kategoriId);
 
-        ps.setString(1, biznes.getEmri());
-        ps.setString(2, biznes.getPershkrim());
-        ps.setString(3, biznes.getKategori());
-        ps.setString(4, biznes.getNipt());
-        ps.setString(5, biznes.getLicense());
-        ps.setString(6, biznes.getTelefon());
-        ps.setString(7, biznes.getEmail());
-        ps.setString(8, biznes.getWebsite());
-
-        ps.executeUpdate();
-
-        ResultSet generatedKeys = ps.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            int biznesId = generatedKeys.getInt(1);
-            biznes.setBiznesId(biznesId);
-
-            // Save location if exists
-            if (biznes.getLokacion() != null) {
-                saveLokacion(biznes.getLokacion(), biznesId);
+                System.out.println("DEBUG: Biznesi u ruajt me ID: " + newBiznesId);
+                System.out.println("DEBUG: Duke lidhur me kategorinë ID: " + kategoriId);
             }
 
-            // Save categories if exists
-            if (biznes.getKategorite() != null && !biznes.getKategorite().isEmpty()) {
-                for (Kategori kategori : biznes.getKategorite()) {
-                    addKategoriToBiznes(biznesId, kategori.getKategoriId());
-                }
-            }
+            conn.commit(); // Përfundo transaksionin
+            System.out.println("DEBUG: Transaksioni u krye me sukses!");
+
+        } catch (Exception e) {
+            conn.rollback(); // Rikthe nëse ka gabim
+            throw e;
+        } finally {
+            conn.setAutoCommit(true);
         }
     }
 
     public void update(Biznes biznes) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "UPDATE biznes SET emri=?, pershkrim=?, kategori=?, nipt=?, license=?, " +
-                "telefon=?, email=?, website=?, updated_at=? WHERE biznes_id=?";
+        String sql = "UPDATE biznes SET emri=?, pershkrim=?, kategori=?, nipt=?, license=?, telefon=?, email=?, website=?, updated_at=? WHERE biznes_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, biznes.getEmri());
@@ -160,25 +132,19 @@ public class BiznesDAO {
         ps.setString(8, biznes.getWebsite());
         ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
         ps.setInt(10, biznes.getBiznesId());
-
         ps.executeUpdate();
-
-        // Update location if exists
-        if (biznes.getLokacion() != null) {
-            updateLokacion(biznes.getLokacion());
-        }
     }
 
     public void delete(int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
 
-        // Delete business categories first
+        // Delete categories first
         deleteBiznesKategorite(biznesId);
 
-        // Delete business location
+        // Delete location
         deleteLokacionByBiznesId(biznesId);
 
-        // Then delete business
+        // Delete biznes
         String sql = "DELETE FROM biznes WHERE biznes_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, biznesId);
@@ -191,11 +157,7 @@ public class BiznesDAO {
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, nipt);
         ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            return rs.getInt(1) > 0;
-        }
-        return false;
+        return rs.next() && rs.getInt(1) > 0;
     }
 
     public int countBusinesses() throws Exception {
@@ -203,19 +165,45 @@ public class BiznesDAO {
         String sql = "SELECT COUNT(*) FROM biznes";
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-        return 0;
+        return rs.next() ? rs.getInt(1) : 0;
     }
 
-    // Private helper methods
+    // ==================== CATEGORY LINK METHODS (PUBLIC) ====================
+    public void addKategoriToBiznes(int biznesId, int kategoriId) throws Exception {
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        // Kontrollo nëse ekziston lidhja
+        String checkSql = "SELECT COUNT(*) FROM biznes_kategori WHERE biznes_id=? AND kategori_id=?";
+        PreparedStatement checkPs = conn.prepareStatement(checkSql);
+        checkPs.setInt(1, biznesId);
+        checkPs.setInt(2, kategoriId);
+        ResultSet rs = checkPs.executeQuery();
+
+        if (rs.next() && rs.getInt(1) == 0) {
+            String sql = "INSERT INTO biznes_kategori (biznes_id, kategori_id) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, biznesId);
+            ps.setInt(2, kategoriId);
+            int rows = ps.executeUpdate();
+            System.out.println("DEBUG: Rreshtat e ndikuara në biznes_kategori: " + rows);
+        } else {
+            System.out.println("DEBUG: Lidhja ekziston tashmë!");
+        }
+    }
+
+    public void removeKategoriFromBiznes(int biznesId, int kategoriId) throws Exception {
+        Connection conn = DBConnection.getInstance().getConnection();
+        String sql = "DELETE FROM biznes_kategori WHERE biznes_id=? AND kategori_id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, biznesId);
+        ps.setInt(2, kategoriId);
+        ps.executeUpdate();
+    }
+
+    // ==================== PRIVATE HELPERS ====================
     private Lokacion findLokacionByBiznesId(int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT l.* FROM lokacion l " +
-                "INNER JOIN biznes_lokacion bl ON l.lokacion_id = bl.lokacion_id " +
-                "WHERE bl.biznes_id = ?";
+        String sql = "SELECT l.* FROM lokacion l INNER JOIN biznes_lokacion bl ON l.lokacion_id = bl.lokacion_id WHERE bl.biznes_id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, biznesId);
         ResultSet rs = ps.executeQuery();
@@ -230,120 +218,12 @@ public class BiznesDAO {
             lokacion.setZipCode(rs.getString("zip_code"));
             lokacion.setLatitude(rs.getDouble("latitude"));
             lokacion.setLongitude(rs.getDouble("longitude"));
-            lokacion.setCreatedAt(rs.getTimestamp("created_at") != null ?
-                    rs.getTimestamp("created_at").toLocalDateTime() : null);
-
+            lokacion.setCreatedAt(rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null);
             return lokacion;
         }
         return null;
     }
 
-    private List<Kategori> findKategoriteByBiznesId(int biznesId) throws Exception {
-        List<Kategori> kategorite = new ArrayList<>();
-        Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "SELECT k.* FROM kategori k " +
-                "INNER JOIN biznes_kategori bk ON k.kategori_id = bk.kategori_id " +
-                "WHERE bk.biznes_id = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, biznesId);
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            Kategori kategori = new Kategori();
-            kategori.setKategoriId(rs.getInt("kategori_id"));
-            kategori.setEmri(rs.getString("emri"));
-            kategori.setIkona(rs.getString("ikona"));
-            kategori.setPershkrim(rs.getString("pershkrim"));
-            kategori.setCreatedAt(rs.getTimestamp("created_at") != null ?
-                    rs.getTimestamp("created_at").toLocalDateTime() : null);
-
-            kategorite.add(kategori);
-        }
-        return kategorite;
-    }
-
-    private void saveLokacion(Lokacion lokacion, int biznesId) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-
-        // First save location
-        String sql = "INSERT INTO lokacion (qyteti, adresa, rruga, numri, zip_code, " +
-                "latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-        ps.setString(1, lokacion.getQyteti());
-        ps.setString(2, lokacion.getAdresa());
-        ps.setString(3, lokacion.getRruga());
-        ps.setString(4, lokacion.getNumri());
-        ps.setString(5, lokacion.getZipCode());
-        ps.setDouble(6, lokacion.getLatitude() != null ? lokacion.getLatitude() : 0.0);
-        ps.setDouble(7, lokacion.getLongitude() != null ? lokacion.getLongitude() : 0.0);
-
-        ps.executeUpdate();
-
-        ResultSet generatedKeys = ps.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            int lokacionId = generatedKeys.getInt(1);
-            lokacion.setLokacionId(lokacionId);
-
-            // Link location to business
-            linkBiznesToLokacion(biznesId, lokacionId);
-        }
-    }
-
-    private void updateLokacion(Lokacion lokacion) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "UPDATE lokacion SET qyteti=?, adresa=?, rruga=?, numri=?, " +
-                "zip_code=?, latitude=?, longitude=? WHERE lokacion_id=?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-
-        ps.setString(1, lokacion.getQyteti());
-        ps.setString(2, lokacion.getAdresa());
-        ps.setString(3, lokacion.getRruga());
-        ps.setString(4, lokacion.getNumri());
-        ps.setString(5, lokacion.getZipCode());
-        ps.setDouble(6, lokacion.getLatitude() != null ? lokacion.getLatitude() : 0.0);
-        ps.setDouble(7, lokacion.getLongitude() != null ? lokacion.getLongitude() : 0.0);
-        ps.setInt(8, lokacion.getLokacionId());
-
-        ps.executeUpdate();
-    }
-
-    private void linkBiznesToLokacion(int biznesId, int lokacionId) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-
-        // Remove existing location link
-        String deleteSql = "DELETE FROM biznes_lokacion WHERE biznes_id=?";
-        PreparedStatement deletePs = conn.prepareStatement(deleteSql);
-        deletePs.setInt(1, biznesId);
-        deletePs.executeUpdate();
-
-        // Add new location link
-        String insertSql = "INSERT INTO biznes_lokacion (biznes_id, lokacion_id) VALUES (?, ?)";
-        PreparedStatement insertPs = conn.prepareStatement(insertSql);
-        insertPs.setInt(1, biznesId);
-        insertPs.setInt(2, lokacionId);
-        insertPs.executeUpdate();
-    }
-
-    private void addKategoriToBiznes(int biznesId, int kategoriId) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-
-        // Check if already linked
-        String checkSql = "SELECT COUNT(*) FROM biznes_kategori WHERE biznes_id=? AND kategori_id=?";
-        PreparedStatement checkPs = conn.prepareStatement(checkSql);
-        checkPs.setInt(1, biznesId);
-        checkPs.setInt(2, kategoriId);
-        ResultSet rs = checkPs.executeQuery();
-
-        if (rs.next() && rs.getInt(1) == 0) {
-            // Not linked, insert new
-            String sql = "INSERT INTO biznes_kategori (biznes_id, kategori_id) VALUES (?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, biznesId);
-            ps.setInt(2, kategoriId);
-            ps.executeUpdate();
-        }
-    }
 
     private void deleteBiznesKategorite(int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
@@ -355,8 +235,6 @@ public class BiznesDAO {
 
     private void deleteLokacionByBiznesId(int biznesId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
-
-        // Get location ID first
         String getSql = "SELECT lokacion_id FROM biznes_lokacion WHERE biznes_id=?";
         PreparedStatement getPs = conn.prepareStatement(getSql);
         getPs.setInt(1, biznesId);
@@ -364,14 +242,13 @@ public class BiznesDAO {
 
         if (rs.next()) {
             int lokacionId = rs.getInt("lokacion_id");
-
-            // Delete from biznes_lokacion
+            // delete link
             String deleteLinkSql = "DELETE FROM biznes_lokacion WHERE biznes_id=?";
             PreparedStatement deleteLinkPs = conn.prepareStatement(deleteLinkSql);
             deleteLinkPs.setInt(1, biznesId);
             deleteLinkPs.executeUpdate();
 
-            // Delete location
+            // delete location
             String deleteLocSql = "DELETE FROM lokacion WHERE lokacion_id=?";
             PreparedStatement deleteLocPs = conn.prepareStatement(deleteLocSql);
             deleteLocPs.setInt(1, lokacionId);
@@ -379,7 +256,7 @@ public class BiznesDAO {
         }
     }
 
-    private Biznes mapResultSetToBiznes(ResultSet rs) throws SQLException {
+    public Biznes mapResultSetToBiznes(ResultSet rs) throws SQLException {
         Biznes biznes = new Biznes();
         biznes.setBiznesId(rs.getInt("biznes_id"));
         biznes.setEmri(rs.getString("emri"));
@@ -390,11 +267,113 @@ public class BiznesDAO {
         biznes.setTelefon(rs.getString("telefon"));
         biznes.setEmail(rs.getString("email"));
         biznes.setWebsite(rs.getString("website"));
-        biznes.setCreatedAt(rs.getTimestamp("created_at") != null ?
-                rs.getTimestamp("created_at").toLocalDateTime() : null);
-        biznes.setUpdatedAt(rs.getTimestamp("updated_at") != null ?
-                rs.getTimestamp("updated_at").toLocalDateTime() : null);
-
+        biznes.setCreatedAt(rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null);
+        biznes.setUpdatedAt(rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null);
         return biznes;
+    }
+    // Shtoni këto metoda në BiznesDAO.java:
+
+    // ==================== BUSINESS CATEGORIES ====================
+    public List<Biznes> findBusinessesByCategoryId(int kategoriId) throws Exception {
+        List<Biznes> businesses = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+        String sql = "SELECT b.* FROM biznes b " +
+                "INNER JOIN biznes_kategori bk ON b.biznes_id = bk.biznes_id " +
+                "WHERE bk.kategori_id = ? ORDER BY b.emri";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, kategoriId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            businesses.add(mapResultSetToBiznes(rs));
+        }
+        return businesses;
+    }
+
+    public List<Kategori> getCategoriesForBusiness(int biznesId) throws Exception {
+        return findKategoriteByBiznesId(biznesId); // Metoda ekzistuese private, duhet ta bëjmë public
+    }
+
+    // Ndryshoni këtë metodë nga private në public:
+    public List<Kategori> findKategoriteByBiznesId(int biznesId) throws Exception {
+        List<Kategori> kategorite = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+        String sql = "SELECT k.* FROM kategori k INNER JOIN biznes_kategori bk ON k.kategori_id = bk.kategori_id WHERE bk.biznes_id = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, biznesId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Kategori k = new Kategori();
+            k.setKategoriId(rs.getInt("kategori_id"));
+            k.setEmri(rs.getString("emri"));
+            k.setIkona(rs.getString("ikona"));
+            k.setPershkrim(rs.getString("pershkrim"));
+            k.setCreatedAt(rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null);
+            kategorite.add(k);
+        }
+        return kategorite;
+    }
+
+    // ==================== SEARCH METHODS ====================
+    public List<Biznes> searchByCity(String qyteti) throws Exception {
+        List<Biznes> businesses = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+        // Kjo kërkon që të keni një lidhje me lokacion
+        String sql = "SELECT b.* FROM biznes b " +
+                "INNER JOIN biznes_lokacion bl ON b.biznes_id = bl.biznes_id " +
+                "INNER JOIN lokacion l ON bl.lokacion_id = l.lokacion_id " +
+                "WHERE l.qyteti LIKE ? ORDER BY b.emri";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, "%" + qyteti + "%");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            businesses.add(mapResultSetToBiznes(rs));
+        }
+        return businesses;
+    }
+
+    public List<Biznes> searchByName(String emri) throws Exception {
+        List<Biznes> businesses = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM biznes WHERE emri LIKE ? ORDER BY emri";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, "%" + emri + "%");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            businesses.add(mapResultSetToBiznes(rs));
+        }
+        return businesses;
+    }
+
+    public List<Biznes> searchByCityAndCategory(String qyteti, String kategoriEmri) throws Exception {
+        List<Biznes> businesses = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        // Kjo është më komplekse sepse kërkon lidhje të shumta
+        String sql = "SELECT DISTINCT b.* FROM biznes b " +
+                "LEFT JOIN biznes_lokacion bl ON b.biznes_id = bl.biznes_id " +
+                "LEFT JOIN lokacion l ON bl.lokacion_id = l.lokacion_id " +
+                "LEFT JOIN biznes_kategori bk ON b.biznes_id = bk.biznes_id " +
+                "LEFT JOIN kategori k ON bk.kategori_id = k.kategori_id " +
+                "WHERE (? = '' OR l.qyteti LIKE ?) " +
+                "AND (? = '' OR k.emri LIKE ? OR b.kategori LIKE ?) " +
+                "ORDER BY b.emri";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, qyteti != null ? qyteti : "");
+        ps.setString(2, "%" + (qyteti != null ? qyteti : "") + "%");
+        ps.setString(3, kategoriEmri != null ? kategoriEmri : "");
+        ps.setString(4, "%" + (kategoriEmri != null ? kategoriEmri : "") + "%");
+        ps.setString(5, "%" + (kategoriEmri != null ? kategoriEmri : "") + "%");
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            businesses.add(mapResultSetToBiznes(rs));
+        }
+        return businesses;
     }
 }
