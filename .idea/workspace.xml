@@ -5,194 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="UI ADDED">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_01_2026_12_58_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_01_2026_12_58_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08_01_2026_12_58__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/fullscreen.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/preview.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/09576d16bc83b22e7638f01bf505a120.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/11abab80af6217cde74e9f22baa21a08.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/224712e4450bdebd83d4347118cd585c.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/332c467a4c6d7e37dc1f1dc59a8f357a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/4cf4ffc38e7849236a7d881ba18372f2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/6d75dcef87fbe6dff22cedc37814d031.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/a82e18abf3c304d02bb575d6cc03a1b2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/b1366f44808053cb07e957f29284c57a.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/android-icon-hires.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/android-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/apple-touch-icon-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/apple-touch-icon-retina180.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/apple-touch-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-568.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad-landscape-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad-pro-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad-pro.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-ipad.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-retina-6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-retina-6plus-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-retina-6plus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/branding/startup.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/f1557142493269/14beb8e3e9bd83da012e7827416df18a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/f1557142493269/71c3f5ddb638ff1ec8264443ca7b97c5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/f1557142493269/80faf1ed17367057152bec9fb108164d.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/f1557142493269/e2b6cbb30aa6d3a8e728ec43eb6aec94.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/f1557142493269/fe6028f8c56382142ae7695557ae8bca.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/fefa92151a720853e4b271502e0e72de.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/154f55b54fee5cd3f77108ca5a517556_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/15b199d0a00930146f4f0cb069c1895f_a8d4f9.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/15b199d0a00930146f4f0cb069c1895f_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/308d48427cd7846bd86b679eabd077ae_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/3e49eaab00dc41aaa07e1f7e39779c39_959aad.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/3e49eaab00dc41aaa07e1f7e39779c39_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/51857a7a45b2442727dade1f747c9e91_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/5d9f6024377de733d869de5913e593d0_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/61a2922cfa9b623512ce97a21983a037_999999.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/7b6a744626f3052f1c6578b18ce25448_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/987371e0c84e1e3877c0b8f6aea57272_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/9f51e6dd9adaacbc69eb39a3b11e2069_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/a764f2746aa43431594a25b3e9d5dc34_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/b0a2a6e58cba73da2d0b8dc3e0ac8fe8_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/b6ceb7edadd8e24aa2d37c53b6e14804_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/baea4fbe4e9a065abaa20b2f597b1ec0_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/c0877fc419aa836a4097f4f982a53a59_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/debe6ff3d4a09572501e53df49c536c0_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/assets/generated/edfb70966c8a7f21486d760454bbe0a6_5856d6.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/data/data.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/images/player/actions-sprite-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/images/player/appicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/images/player/player-logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/images/player/skins/iPhone_15_Pro.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/images/player/touch-cursor-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/common/components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/common/components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/ios7/components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/ios7/components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/ios9/components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/ios9/components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/material/components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/libraries/material/components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/player-export.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/plugins/aframe/aframe-gif-shader.protoio.custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/plugins/aframe/aframe.protoio.custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/plugins/jquery/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/plugins/lottie/lottie.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/preview-export-min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/scripts/preview-letterbox-min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/stylesheets/player-export.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/stylesheets/preview-export-min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/stylesheets/preview-letterbox-min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Online reservation system -html (2)/src/webkitmask/maskimages.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/._Online reservation system -html (2)" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/._.DS_Store" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/._fullscreen.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/._preview.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/._readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/._src" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._assets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._images" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._libraries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._scripts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._stylesheets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/._webkitmask" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._09576d16bc83b22e7638f01bf505a120.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._11abab80af6217cde74e9f22baa21a08.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._224712e4450bdebd83d4347118cd585c.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._332c467a4c6d7e37dc1f1dc59a8f357a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._4cf4ffc38e7849236a7d881ba18372f2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._6d75dcef87fbe6dff22cedc37814d031.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._a82e18abf3c304d02bb575d6cc03a1b2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._b1366f44808053cb07e957f29284c57a.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._branding" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._f1557142493269" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._fefa92151a720853e4b271502e0e72de.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/._generated" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._android-icon-hires.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._android-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._apple-touch-icon-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._apple-touch-icon-retina180.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._apple-touch-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-568.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad-landscape-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad-pro-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad-pro.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-ipad.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-retina-6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-retina-6plus-landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-retina-6plus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup-retina.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/branding/._startup.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/f1557142493269/._14beb8e3e9bd83da012e7827416df18a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/f1557142493269/._71c3f5ddb638ff1ec8264443ca7b97c5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/f1557142493269/._80faf1ed17367057152bec9fb108164d.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/f1557142493269/._e2b6cbb30aa6d3a8e728ec43eb6aec94.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/f1557142493269/._fe6028f8c56382142ae7695557ae8bca.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._154f55b54fee5cd3f77108ca5a517556_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._15b199d0a00930146f4f0cb069c1895f_a8d4f9.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._15b199d0a00930146f4f0cb069c1895f_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._308d48427cd7846bd86b679eabd077ae_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._3e49eaab00dc41aaa07e1f7e39779c39_959aad.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._3e49eaab00dc41aaa07e1f7e39779c39_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._51857a7a45b2442727dade1f747c9e91_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._5d9f6024377de733d869de5913e593d0_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._61a2922cfa9b623512ce97a21983a037_999999.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._7b6a744626f3052f1c6578b18ce25448_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._987371e0c84e1e3877c0b8f6aea57272_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._9f51e6dd9adaacbc69eb39a3b11e2069_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._a764f2746aa43431594a25b3e9d5dc34_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._b0a2a6e58cba73da2d0b8dc3e0ac8fe8_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._b6ceb7edadd8e24aa2d37c53b6e14804_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._baea4fbe4e9a065abaa20b2f597b1ec0_68708a.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._c0877fc419aa836a4097f4f982a53a59_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._debe6ff3d4a09572501e53df49c536c0_ffffff.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/assets/generated/._edfb70966c8a7f21486d760454bbe0a6_5856d6.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/data/._data.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/._player" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/._actions-sprite-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/._appicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/._player-logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/._skins" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/._touch-cursor-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/images/player/skins/._iPhone_15_Pro.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/._common" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/._ios7" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/._ios9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/._material" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/common/._components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/common/._components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/ios7/._components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/ios7/._components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/ios9/._components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/ios9/._components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/material/._components.1.00.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/libraries/material/._components.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/._player-export.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/._plugins" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/._preview-export-min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/._preview-letterbox-min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/._aframe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/._jquery" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/._lottie" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/aframe/._aframe-gif-shader.protoio.custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/aframe/._aframe.protoio.custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/jquery/._jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/scripts/plugins/lottie/._lottie.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/stylesheets/._player-export.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/stylesheets/._preview-export-min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/stylesheets/._preview-letterbox-min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/__MACOSX/Online reservation system -html (2)/src/webkitmask/._maskimages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +42,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="36ZJedzMg1Wi69VacutX88JIIKR" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -313,7 +128,7 @@
       <workItem from="1765571318255" duration="17000" />
       <workItem from="1765571376065" duration="124000" />
       <workItem from="1767871838796" duration="2463000" />
-      <workItem from="1767874349015" duration="1902000" />
+      <workItem from="1767874349015" duration="3193000" />
     </task>
     <task id="LOCAL-00001" summary="KEJDA_INITIAL STRUCTURE">
       <option name="closed" value="true" />
@@ -323,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765467771759</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="UI ADDED">
+      <option name="closed" value="true" />
+      <created>1767876822533</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1767876822533</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,9 +164,12 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="KEJDA_INITIAL STRUCTURE" />
     <MESSAGE value="UI ADDED" />
     <option name="LAST_COMMIT_MESSAGE" value="UI ADDED" />
+    <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
