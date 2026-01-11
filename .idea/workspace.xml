@@ -124,7 +124,7 @@
       <recent name="com.gra.tester" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.com.gra.db in gra-project">
+  <component name="RunManager" selected="JUnit.All in gra-project (3)">
     <configuration name="MainApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gra.app.MainApp" />
       <module name="gra-project" />
@@ -181,7 +181,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in gra-project (4)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in gra-project (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gra-project" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
@@ -189,7 +189,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in gra-project (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gra-project" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
@@ -232,19 +232,19 @@
       <item itemvalue="Application.TestConnection" />
       <item itemvalue="Application.SimpleTest" />
       <item itemvalue="Application.MainApp" />
-      <item itemvalue="JUnit.All in gra-project" />
       <item itemvalue="JUnit.All in gra-project (1)" />
-      <item itemvalue="JUnit.All in gra-project (4)" />
+      <item itemvalue="JUnit.All in gra-project (2)" />
+      <item itemvalue="JUnit.All in gra-project (3)" />
       <item itemvalue="JUnit.com.gra.app in gra-project" />
       <item itemvalue="JUnit.com.gra.db in gra-project" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in gra-project (3)" />
+        <item itemvalue="JUnit.All in gra-project (2)" />
         <item itemvalue="JUnit.com.gra.db in gra-project" />
         <item itemvalue="JUnit.com.gra.app in gra-project" />
         <item itemvalue="JUnit.All in gra-project (1)" />
-        <item itemvalue="JUnit.All in gra-project" />
-        <item itemvalue="JUnit.All in gra-project (4)" />
       </list>
     </recent_temporary>
   </component>
