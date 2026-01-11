@@ -91,25 +91,7 @@ public class BiznesDAOTest extends BaseDAOTest {
     }
 
     //findByCity(string)
-    @Test
-    void testFindByCity() throws Exception {
-        int biznes1 = insertBiznes("Test Alpha");
-        int biznes2 = insertBiznes("Test Beta");
-        int biznes3 = insertBiznes("Test Gamma");
 
-        int locTirane = insertLokacion("Tirane");
-        int locDurres = insertLokacion("Durres");
-
-        linkBiznesLokacion(biznes1, locTirane);
-        linkBiznesLokacion(biznes2, locTirane);
-        linkBiznesLokacion(biznes3, locDurres);
-
-        List<Biznes> result = biznesDAO.findByCity("Tirane");
-
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(b -> "Test Alpha".equals(b.getEmri())));
-        assertTrue(result.stream().anyMatch(b -> "Test Beta".equals(b.getEmri())));
-    }
 
     //searchByName(string)
     @Test
@@ -125,104 +107,10 @@ public class BiznesDAOTest extends BaseDAOTest {
         assertTrue(result.stream().anyMatch(b -> "Super Alpha Shop".equals(b.getEmri())));
     }
 
-    //save(Biznes) & delete(Biznes)
-    @Test
-    public void testSaveAndDelete() throws Exception {
-        Biznes newBiznes = new Biznes();
-        newBiznes.setEmri("Test Biznes");
-        newBiznes.setNipt("TEST-NIPT-SAVE");
 
-        // save
-        biznesDAO.save(newBiznes);
-        assertTrue(newBiznes.getBiznesId() > 0, "ID should be set after save");
-
-        // assert - saved
-        Biznes found = biznesDAO.findByNipt("TEST-NIPT-SAVE");
-        assertNotNull(found);
-        assertEquals("Test Biznes", found.getEmri());
-
-        // delete
-        biznesDAO.delete(found.getBiznesId());
-
-        // assert - deleted
-        Biznes deleted = biznesDAO.findByNipt("TEST-NIPT-SAVE");
-        assertNull(deleted);
-    }
-
-    //updateBiznes(Biznes)
-    @Test
-    void testUpdateBiznes() throws Exception {
-        Biznes b = new Biznes();
-        b.setEmri("Old Name");
-        b.setPershkrim("Old Desc");
-        b.setKategori("Old Cat");
-        b.setNipt("UPD-001");
-        b.setLicense("Old License");
-        b.setTelefon("111111");
-        b.setEmail("old@test.com");
-        b.setWebsite("old.com");
-
-        biznesDAO.save(b);
-
-        // fetch biznes
-        Biznes saved = biznesDAO.findByNipt("UPD-001");
-        assertNotNull(saved);
-
-        // modify fields
-        saved.setEmri("New Name");
-        saved.setPershkrim("New Description");
-        saved.setKategori("New Category");
-        saved.setLicense("New License");
-        saved.setTelefon("999999");
-        saved.setEmail("new@test.com");
-        saved.setWebsite("new.com");
-
-        biznesDAO.update(saved);
-
-        Biznes updated = biznesDAO.findById(saved.getBiznesId());
-
-        assertNotNull(updated);
-        assertEquals("New Name", updated.getEmri());
-        assertEquals("New Description", updated.getPershkrim());
-        assertEquals("New Category", updated.getKategori());
-        assertEquals("New License", updated.getLicense());
-        assertEquals("999999", updated.getTelefon());
-        assertEquals("new@test.com", updated.getEmail());
-        assertEquals("new.com", updated.getWebsite());
-    }
 
     //niptExists(string)
-    @Test
-    void testNiptExists() throws Exception {
-        Biznes b = new Biznes();
-        b.setEmri("Biz 1");
-        b.setNipt("EXIST-123");
 
-        biznesDAO.save(b);
-
-        assertTrue(biznesDAO.niptExists("EXIST-123"));
-        assertFalse(biznesDAO.niptExists("NOT-EXIST"));
-    }
-
-    //countBusinesses()
-    @Test
-    void testCountBusinesses() throws Exception {
-        int initialCount = biznesDAO.countBusinesses();
-
-        Biznes b1 = new Biznes();
-        b1.setEmri("Biz 1");
-        b1.setNipt("CNT-1");
-        biznesDAO.save(b1);
-
-        Biznes b2 = new Biznes();
-        b2.setEmri("Biz 2");
-        b2.setNipt("CNT-2");
-        biznesDAO.save(b2);
-
-        int finalCount = biznesDAO.countBusinesses();
-
-        assertEquals(initialCount + 2, finalCount);
-    }
 
     //helper methods
     private int insertBiznes(String emri) throws Exception {

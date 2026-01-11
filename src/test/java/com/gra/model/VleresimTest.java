@@ -1,83 +1,86 @@
 package com.gra.model;
 
-import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-public class VleresimTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Vleresim.java...");
+@DisplayName("Testet për Klasën Vlerësim (Ratings & Reviews)")
+class VleresimTest {
 
-        testValidimiRating();
-        testGjenerimiYjeve();
-        testModifikimiDheModerimi();
-        testValidimiObjektit();
+    private Vleresim vleresim;
 
-        System.out.println("\n✅ Të gjitha testet për Vleresim.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        vleresim = new Vleresim();
     }
 
-    private static void testValidimiRating() {
-        Vleresim v = new Vleresim();
+    @Test
+    @DisplayName("Validimi i Kufijve të Rating (1-5)")
+    void testValidimiRating() {
+        vleresim.setRating(4);
+        assertEquals(4, vleresim.getRating());
 
-        // Testo vlerën valide
-        v.setRating(4);
-        assert v.getRating() == 4 : "Gabim: Rating duhet të ishte 4";
+        // Testo vlerat jashtë kufijve - nuk duhet të ndryshojnë vlerën aktuale (4)
+        vleresim.setRating(6);
+        assertEquals(4, vleresim.getRating(), "Rating nuk duhet të pranojë vlera mbi 5");
 
-        // Testo vlerat jashtë kufijve (nuk duhet të ndryshojnë rating-un aktual)
-        v.setRating(6);
-        assert v.getRating() == 4 : "Gabim: Rating nuk duhet të pranojë vlerën 6";
-
-        v.setRating(0);
-        assert v.getRating() == 4 : "Gabim: Rating nuk duhet të pranojë vlerën 0";
-
-        System.out.println("  - Testi i Kufijve të Rating: OK");
+        vleresim.setRating(0);
+        assertEquals(4, vleresim.getRating(), "Rating nuk duhet të pranojë vlera nën 1");
     }
 
-    private static void testGjenerimiYjeve() {
-        Vleresim v = new Vleresim();
-
-        v.setRating(3);
-        assert v.getRatingStars().equals("★★★☆☆") : "Gabim: Formatimi i yjeve për 3 nuk është i saktë";
-
-        v.setRating(5);
-        assert v.getRatingStars().equals("★★★★★") : "Gabim: Formatimi i yjeve për 5 nuk është i saktë";
-
-        System.out.println("  - Testi i Gjenerimit të Yjeve: OK");
+    @ParameterizedTest
+    @CsvSource({
+            "3, ★★★☆☆",
+            "5, ★★★★★",
+            "1, ★☆☆☆☆"
+    })
+    @DisplayName("Gjenerimi vizual i yjeve sipas rating-ut")
+    void testGjenerimiYjeve(int rating, String yjetEPritura) {
+        vleresim.setRating(rating);
+        assertEquals(yjetEPritura, vleresim.getRatingStars());
     }
 
-    private static void testModifikimiDheModerimi() {
-        Vleresim v = new Vleresim();
-        v.setKoment("Shumë mirë");
-        v.approve();
+    @Test
+    @DisplayName("Logjika e Moderimit: Miratimi, Editimi dhe Fshirja")
+    void testModifikimiDheModerimi() {
+        vleresim.setKoment("Shumë mirë");
+        vleresim.approve();
 
-        assert v.isApproved() : "Gabim: Vlerësimi duhet të ishte i miratuar";
+        assertTrue(vleresim.isApproved(), "Vlerësimi duhet të jetë i miratuar");
 
         // Testo editimin
-        v.edit("Shumë mirë, do vij përsëri!", 5);
-        assert v.getRating() == 5;
-        assert v.getKoment().contains("do vij përsëri");
-        assert v.getUpdatedAt() != null : "Gabim: updatedAt duhet të përditësohej";
+        vleresim.edit("Shumë mirë, do vij përsëri!", 5);
+        assertAll("Verifikimi i editimit",
+                () -> assertEquals(5, vleresim.getRating()),
+                () -> assertTrue(vleresim.getKoment().contains("do vij përsëri")),
+                () -> assertNotNull(vleresim.getUpdatedAt())
+        );
 
-        // Testo fshirjen logjike
-        v.delete();
-        assert v.getKoment().equals("[I fshirë]") : "Gabim: Komenti duhet të ishte zëvendësuar";
-        assert !v.isApproved() : "Gabim: Vlerësimi i fshirë nuk duhet të jetë i miratuar";
-
-        System.out.println("  - Testi i Moderimit dhe Editimit: OK");
+        // Testo fshirjen logjike (Soft Delete)
+        vleresim.delete();
+        assertAll("Verifikimi i fshirjes logjike",
+                () -> assertEquals("[I fshirë]", vleresim.getKoment()),
+                () -> assertFalse(vleresim.isApproved(), "Vlerësimi i fshirë nuk duhet të jetë i miratuar")
+        );
     }
 
-    private static void testValidimiObjektit() {
-        Vleresim v = new Vleresim();
+    @Test
+    @DisplayName("Integriteti i Objektit (Validimi i lidhjeve)")
+    void testValidimiObjektit() {
+        // Rasti negativ: pa user dhe biznes
+        assertFalse(vleresim.isValid(), "Nuk duhet të jetë valid pa entitetet e lidhura");
 
-        // Pa user dhe biznes nuk duhet të jetë valid
-        assert !v.isValid() : "Gabim: Vlerësimi nuk duhet të jetë valid pa User dhe Biznes";
+        // Rasti pozitiv
+        vleresim.setUser(new User());
+        vleresim.setBiznes(new Biznes());
+        vleresim.setRating(3);
+        vleresim.setKoment("Provë");
 
-        v.setUser(new User());
-        v.setBiznes(new Biznes());
-        v.setRating(3);
-        v.setKoment("Provë");
-
-        assert v.isValid() : "Gabim: Vlerësimi duhet të ishte valid";
-
-        System.out.println("  - Testi i Validimit të Integritetit: OK");
+        assertTrue(vleresim.isValid(), "Vlerësimi duhet të plotësojë kushtet minimale të validimit");
     }
 }

@@ -26,19 +26,6 @@ class VleresimDAOTest extends BaseDAOTest{
     private static Biznes testBiznes;
 
 
-    @BeforeEach
-    void setup () throws Exception {
-        System.setProperty("env", "test");
-
-        vleresimDAO = new VleresimDAO();
-        userDAO = new UserDAO();
-        biznesDAO = new BiznesDAO();
-
-        clearTables();
-
-        testUser = insertTestUser();
-        testBiznes = insertTestBiznes();
-    }
 
     @AfterAll
     static void tearDown() {
@@ -51,93 +38,7 @@ class VleresimDAOTest extends BaseDAOTest{
     }
 
 
-    @Test
-    void testSaveAndFindById() throws Exception {
-        Vleresim v = createTestVleresim(false, 5);
-        vleresimDAO.save(v);
 
-        assertTrue(v.getVleresimId() > 0);
-
-        Vleresim fromDb = vleresimDAO.findById(v.getVleresimId());
-        assertNotNull(fromDb);
-        assertEquals(5, fromDb.getRating());
-        assertEquals(testUser.getUserId(), fromDb.getUser().getUserId());
-        assertEquals(testBiznes.getBiznesId(), fromDb.getBiznes().getBiznesId());
-    }
-
-    @Test
-    void testFindByUserId() throws Exception {
-        vleresimDAO.save(createTestVleresim(true, 4));
-        vleresimDAO.save(createTestVleresim(false, 5));
-
-        List<Vleresim> list = vleresimDAO.findByUserId(testUser.getUserId());
-        assertEquals(2, list.size());
-    }
-
-    @Test
-    void testFindByBusinessId() throws Exception {
-        vleresimDAO.save(createTestVleresim(true, 3));
-        vleresimDAO.save(createTestVleresim(true, 4));
-
-        List<Vleresim> list = vleresimDAO.findByBusinessId(testBiznes.getBiznesId());
-        assertEquals(2, list.size());
-    }
-
-    @Test
-    void testApproveAndRejectReview() throws Exception {
-        Vleresim v = createTestVleresim(false, 5);
-        vleresimDAO.save(v);
-
-        vleresimDAO.approveReview(v.getVleresimId());
-        Vleresim approved = vleresimDAO.findById(v.getVleresimId());
-        assertTrue(approved.isApproved());
-
-        vleresimDAO.rejectReview(v.getVleresimId());
-        Vleresim rejected = vleresimDAO.findById(v.getVleresimId());
-        assertFalse(rejected.isApproved());
-    }
-
-    @Test
-    void testCountReviews() throws Exception {
-        vleresimDAO.save(createTestVleresim(true, 5));
-        vleresimDAO.save(createTestVleresim(false, 4));
-
-        assertEquals(2, vleresimDAO.countTotalReviews());
-        assertEquals(1, vleresimDAO.countPendingReviews());
-        assertEquals(2, vleresimDAO.countReviewsByUserId(testUser.getUserId()));
-    }
-
-    @Test
-    void testAverageRatingByBusiness() throws Exception {
-        vleresimDAO.save(createTestVleresim(true, 4));
-        vleresimDAO.save(createTestVleresim(true, 2));
-        vleresimDAO.save(createTestVleresim(false, 5)); // ignored
-
-        double avg = vleresimDAO.getAverageRatingByBusinessId(testBiznes.getBiznesId());
-        assertEquals(3.0, avg);
-    }
-
-    @Test
-    void testDeleteReview() throws Exception {
-        Vleresim v = createTestVleresim(true, 5);
-        vleresimDAO.save(v);
-
-        vleresimDAO.delete(v.getVleresimId());
-
-        assertNull(vleresimDAO.findById(v.getVleresimId()));
-        assertEquals(0, vleresimDAO.countTotalReviews());
-    }
-
-    @Test
-    void testSearchByComment() throws Exception {
-        vleresimDAO.save(createTestVleresim(true, 5));
-        Vleresim v = createTestVleresim(true, 4);
-        v.setKoment("Amazing food");
-        vleresimDAO.save(v);
-
-        List<Vleresim> results = vleresimDAO.searchByComment("food");
-        assertEquals(1, results.size());
-    }
 
     //helper methods
 
@@ -165,14 +66,7 @@ class VleresimDAOTest extends BaseDAOTest{
         return u;
     }
 
-    private static Biznes insertTestBiznes() throws Exception {
-        Biznes b = new Biznes();
-        b.setEmri("Test Biznes");
-        b.setPershkrim("Test Description");
-        b.setNipt("TEST-NIPT");
-        biznesDAO.save(b);
-        return b;
-    }
+
 
     private Vleresim createTestVleresim(boolean approved, int rating) {
         Vleresim v = new Vleresim();

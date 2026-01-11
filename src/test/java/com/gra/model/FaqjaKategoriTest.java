@@ -1,39 +1,33 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
-public class FaqjaKategoriTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për FaqjaKategori.java...");
+class FaqjaKategoriTest {
 
-        testMenaxhimiFAQ();
-        testFiltrimiActiveFAQs();
-        testKonstruktoriDheSetter();
-
-        System.out.println("\n✅ Të gjitha testet për FaqjaKategori.java kaluan me sukses!");
-    }
-
-    private static void testMenaxhimiFAQ() {
+    @Test
+    void testMenaxhimiFAQ() {
         FaqjaKategori kategoria = new FaqjaKategori(1, "Teknike");
         FAQ faq1 = new FAQ(101, "Si te lidhem?", "Perdorni kabllon.");
 
-        // Testo shtimin
         kategoria.addFAQ(faq1);
-        assert kategoria.getFAQCount() == 1 : "Gabim: Duhet te kishte 1 FAQ";
+        assertEquals(1, kategoria.getFAQCount(),
+                "Duhet te kishte 1 FAQ");
 
-        // Testo parandalimin e duplikateve
         kategoria.addFAQ(faq1);
-        assert kategoria.getFAQCount() == 1 : "Gabim: Nuk duhen lejuar FAQ duplikat";
+        assertEquals(1, kategoria.getFAQCount(),
+                "Nuk duhen lejuar FAQ duplikat");
 
-        // Testo heqjen
         kategoria.removeFAQ(faq1);
-        assert kategoria.getFAQCount() == 0 : "Gabim: Lista duhet te ishte bosh";
-
-        System.out.println("  - Testi i menaxhimit të FAQ-ve: OK");
+        assertEquals(0, kategoria.getFAQCount(),
+                "Lista duhet te ishte bosh");
     }
 
-    private static void testFiltrimiActiveFAQs() {
+    @Test
+    void testFiltrimiActiveFAQs() {
         FaqjaKategori kategoria = new FaqjaKategori(2, "Pagesat");
 
         FAQ f1 = new FAQ(1, "P1", "D1");
@@ -45,25 +39,28 @@ public class FaqjaKategoriTest {
         kategoria.addFAQ(f1);
         kategoria.addFAQ(f2);
 
-        // Testo nese getActiveFAQs kthen vetem ato me status true
         List<FAQ> activeList = kategoria.getActiveFAQs();
-        assert activeList.size() == 1 : "Gabim: Duhet te kishte vetem 1 FAQ aktive";
-        assert activeList.get(0).getPyetje().equals("P1") : "Gabim: FAQ e gjetur nuk eshte ajo e duhura";
 
-        System.out.println("  - Testi i filtrimit të FAQ-ve aktive: OK");
+        assertEquals(1, activeList.size(),
+                "Duhet te kishte vetem 1 FAQ aktive");
+
+        assertEquals("P1",
+                activeList.get(0).getPyetje(),
+                "FAQ e gjetur nuk eshte ajo e duhura");
     }
 
-    private static void testKonstruktoriDheSetter() {
+    @Test
+    void testKonstruktoriDheSetter() {
         FaqjaKategori kat = new FaqjaKategori();
+
         kat.setEmri("Marketing");
         kat.setPershkrim("Kategoria per reklama");
         kat.setRenditja(5);
 
-        assert kat.getEmri().equals("Marketing");
-        assert kat.getPershkrim().equals("Kategoria per reklama");
-        assert kat.getRenditja() == 5;
-        assert kat.getFaqs() != null : "Gabim: Lista e faqs duhet te inicializohet ne konstruktor";
-
-        System.out.println("  - Testi i atributeve bazë: OK");
+        assertEquals("Marketing", kat.getEmri());
+        assertEquals("Kategoria per reklama", kat.getPershkrim());
+        assertEquals(5, kat.getRenditja());
+        assertNotNull(kat.getFaqs(),
+                "Lista e faqs duhet te inicializohet ne konstruktor");
     }
 }

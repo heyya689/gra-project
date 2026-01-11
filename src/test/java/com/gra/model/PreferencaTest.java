@@ -1,75 +1,80 @@
 package com.gra.model;
 
-import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 
-public class PreferencaTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Preferenca.java...");
+@DisplayName("Testet për Preferencat e Përdoruesit (Preferenca.java)")
+class PreferencaTest {
 
-        testVleratFillestare();
-        testLogjikaENjoftimeve();
-        testNdryshimiGjuhesDheTeme();
-        testUpdateTimestamps();
+    private Preferenca pref;
 
-        System.out.println("\n✅ Të gjitha testet për Preferenca.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        pref = new Preferenca();
     }
 
-    private static void testVleratFillestare() {
-        Preferenca pref = new Preferenca();
-
-        // Verifikojmë vlerat default të përcaktuara në konstruktor
-        assert pref.getGjuha().equals("sq") : "Gabim: Gjuha default duhet të jetë 'sq'";
-        assert pref.getTema().equals("light") : "Gabim: Tema default duhet të jetë 'light'";
-        assert pref.isNjoftimeAktive() : "Gabim: Njoftimet duhet të jenë aktive default";
-        assert pref.isEmailNotifications() : "Gabim: Email notifications duhet të jenë true default";
-        assert !pref.isSmsNotifications() : "Gabim: SMS notifications duhet të jenë false default";
-
-        System.out.println("  - Testi i Vlerave Fillestare: OK");
+    @Test
+    @DisplayName("Verifikimi i vlerave fillestare (Default)")
+    void testVleratFillestare() {
+        assertAll("Vlerat default të sistemit",
+                () -> assertEquals("sq", pref.getGjuha(), "Gjuha duhet të jetë shqip (sq)"),
+                () -> assertEquals("light", pref.getTema(), "Tema duhet të jetë 'light'"),
+                () -> assertTrue(pref.isNjoftimeAktive(), "Njoftimet duhet të jenë aktive"),
+                () -> assertTrue(pref.isEmailNotifications(), "Email duhet të jetë aktiv"),
+                () -> assertFalse(pref.isSmsNotifications(), "SMS duhet të jetë jo-aktiv")
+        );
     }
 
-    private static void testLogjikaENjoftimeve() {
-        Preferenca pref = new Preferenca();
+    @Nested
+    @DisplayName("Logjika e Njoftimeve")
+    class NotificationTests {
 
-        // Testo disable/enable
-        pref.disableNotifications();
-        assert !pref.isNjoftimeAktive() : "Gabim: Njoftimet duhet të ishin false";
+        @Test
+        @DisplayName("Aktivizimi dhe çaktivizimi i njoftimeve globale")
+        void testStatusiGlobal() {
+            pref.disableNotifications();
+            assertFalse(pref.isNjoftimeAktive());
 
-        pref.enableNotifications();
-        assert pref.isNjoftimeAktive() : "Gabim: Njoftimet duhet të ishin true";
+            pref.enableNotifications();
+            assertTrue(pref.isNjoftimeAktive());
+        }
 
-        // Testo toggle për Email
-        boolean statusiFillestar = pref.isEmailNotifications();
-        pref.toggleEmailNotifications();
-        assert pref.isEmailNotifications() != statusiFillestar : "Gabim: Toggle Email nuk funksionoi";
-
-        System.out.println("  - Testi i Logjikës së Njoftimeve: OK");
+        @Test
+        @DisplayName("Toggle për njoftimet me Email")
+        void testToggleEmail() {
+            boolean statusiFillestar = pref.isEmailNotifications();
+            pref.toggleEmailNotifications();
+            assertNotEquals(statusiFillestar, pref.isEmailNotifications(), "Statusi i Email duhet të ndryshojë");
+        }
     }
 
-    private static void testNdryshimiGjuhesDheTeme() {
-        Preferenca pref = new Preferenca();
-
-        // Testo ndryshimin e gjuhës
+    @Test
+    @DisplayName("Validimi i ndryshimit të Gjuhës dhe Temës")
+    void testNdryshimiGjuhesDheTeme() {
+        // Testi i gjuhës
         pref.changeLanguage("en");
-        assert pref.getGjuha().equals("en") : "Gabim: Gjuha nuk u ndryshua në 'en'";
+        assertEquals("en", pref.getGjuha());
 
-        // Testo ndryshimin e temës (vetëm light/dark lejohen)
+        // Testi i temës (Logjika e validimit)
         pref.changeTheme("dark");
-        assert pref.getTema().equals("dark") : "Gabim: Tema nuk u ndryshua në 'dark'";
+        assertEquals("dark", pref.getTema());
 
-        pref.changeTheme("blue-theme"); // Vlerë e palidhur
-        assert pref.getTema().equals("dark") : "Gabim: Tema nuk duhet të ndryshojë me vlerë të jashtme";
-
-        System.out.println("  - Testi i Gjuhës dhe Temës: OK");
+        // Testo që nuk pranohen vlera invalide
+        pref.changeTheme("blue-theme");
+        assertEquals("dark", pref.getTema(), "Tema nuk duhet të ndryshojë me një vlerë të jashtme (blue-theme)");
     }
 
-    private static void testUpdateTimestamps() {
-        Preferenca pref = new Preferenca();
-        pref.setUpdatedAt(null);
+    @Test
+    @DisplayName("Përditësimi automatik i kohës (updatedAt)")
+    void testUpdateTimestamps() {
+        pref.setUpdatedAt(null); // Force reset
 
         pref.toggleSmsNotifications();
-        assert pref.getUpdatedAt() != null : "Gabim: updatedAt duhet të ishte plotësuar pas ndryshimit";
 
-        System.out.println("  - Testi i Timestamps: OK");
+        assertNotNull(pref.getUpdatedAt(), "Timestamp 'updatedAt' duhet të mbushet automatikisht pas çdo ndryshimi");
     }
 }

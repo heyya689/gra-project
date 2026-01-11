@@ -1,85 +1,93 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+
 import java.time.LocalDateTime;
 
-public class RezervimTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Rezervim.java...");
+@DisplayName("Testet për Menaxhimin e Rezervimeve (Rezervim.java)")
+class RezervimTest {
 
-        testRrjedhaEStatusit();
-        testLogjikaEAnullimitMeKohe();
-        testIntegrimiIPageses();
-        testStatusetAktive();
+    private Rezervim rezervim;
 
-        System.out.println("\n✅ Të gjitha testet për Rezervim.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        rezervim = new Rezervim();
     }
 
-    private static void testRrjedhaEStatusit() {
-        Rezervim r = new Rezervim();
-        r.create();
+    @Test
+    @DisplayName("Cikli i Jetës së Statusit: PENDING -> CONFIRMED -> COMPLETED")
+    void testRrjedhaEStatusit() {
+        rezervim.create();
+        assertEquals("PENDING", rezervim.getStatus());
 
-        // 1. Fillimi: PENDING
-        assert r.getStatus().equals("PENDING") : "Gabim: Statusi fillestar duhet të jetë PENDING";
+        rezervim.confirm();
+        assertEquals("CONFIRMED", rezervim.getStatus());
 
-        // 2. Konfirmimi: PENDING -> CONFIRMED
-        r.confirm();
-        assert r.getStatus().equals("CONFIRMED") : "Gabim: Statusi duhet të ishte CONFIRMED";
+        rezervim.complete();
+        assertEquals("COMPLETED", rezervim.getStatus());
 
-        // 3. Përfundimi: CONFIRMED -> COMPLETED
-        r.complete();
-        assert r.getStatus().equals("COMPLETED") : "Gabim: Statusi duhet të ishte COMPLETED";
-
-        // 4. Siguria: Një rezervim i përfunduar nuk mund të anullohet
-        r.cancel();
-        assert r.getStatus().equals("COMPLETED") : "Gabim: Rezervimi COMPLETED nuk duhet të lejonte anullimin";
-
-        System.out.println("  - Testi i Rrjedhës së Statusit: OK");
+        // Siguria: Tentativa për anullim pas përfundimit
+        rezervim.cancel();
+        assertEquals("COMPLETED", rezervim.getStatus(), "Një rezervim COMPLETED nuk duhet të ndryshojë status");
     }
 
-    private static void testLogjikaEAnullimitMeKohe() {
-        Rezervim r = new Rezervim();
-        r.setStatus("CONFIRMED");
+    @Nested
+    @DisplayName("Rregullat e Anullimit (24-orëshi)")
+    class CancellationRules {
 
-        // Rasti 1: Rezervimi është pas 2 ditësh (Duhet të lejohet anullimi)
-        r.setData(LocalDateTime.now().plusHours(48));
-        assert r.canBeCancelled() : "Gabim: Duhet të lejohej anullimi 48 orë para";
+        @Test
+        @DisplayName("Lejimi i anullimit 48 orë para")
+        void testAnullimiLejuar() {
+            rezervim.setStatus("CONFIRMED");
+            rezervim.setData(LocalDateTime.now().plusHours(48));
+            assertTrue(rezervim.canBeCancelled(), "Anullimi duhet të jetë i mundur 2 ditë para");
+        }
 
-        // Rasti 2: Rezervimi është pas 2 orësh (NUK duhet të lejohet anullimi)
-        r.setData(LocalDateTime.now().plusHours(2));
-        assert !r.canBeCancelled() : "Gabim: Nuk duhet të lejohej anullimi vetëm 2 orë para";
-
-        System.out.println("  - Testi i Logjikës së Kohës (24h rule): OK");
+        @Test
+        @DisplayName("Ndalimi i anullimit 2 orë para")
+        void testAnullimiNaluar() {
+            rezervim.setStatus("CONFIRMED");
+            rezervim.setData(LocalDateTime.now().plusHours(2));
+            assertFalse(rezervim.canBeCancelled(), "Anullimi duhet të bllokohet nëse jemi brenda 24 orëve");
+        }
     }
 
-    private static void testIntegrimiIPageses() {
-        Rezervim r = new Rezervim();
-        Pagesat p = new Pagesat(1, 2000.0, "CARD");
-        p.setStatus("COMPLETED"); // Pagesa është kryer
+    @Test
+    @DisplayName("Integrimi: Anullimi i Rezervimit duhet të rimbursojë Pagesën")
+    void testIntegrimiIPageses() {
+        // Përgatitja e pagesës
+        Pagesat pagesa = new Pagesat(1, 2000.0, "CARD");
+        pagesa.processPayment(); // Kalon në COMPLETED
 
-        r.setPagesa(p);
-        r.setStatus("CONFIRMED");
+        rezervim.setPagesa(pagesa);
+        rezervim.setStatus("CONFIRMED");
+        rezervim.setData(LocalDateTime.now().plusHours(30)); // Brenda kohës së lejuar
 
-        // Kur anullojmë rezervimin, duhet të thirret automatikisht refund() i pagesës
-        r.cancel();
-        assert r.getStatus().equals("CANCELLED");
-        assert p.getStatus().equals("REFUNDED") : "Gabim: Pagesa duhet të ishte rimbursuar pas anullimit";
+        // Veprimi
+        rezervim.cancel();
 
-        System.out.println("  - Testi i Integrimit Rezervim-Pagesë: OK");
+        // Verifikimi i dyfishtë (Cross-Object Assertion)
+        assertAll("Integriteti i lidhjes Rezervim-Pagesë",
+                () -> assertEquals("CANCELLED", rezervim.getStatus()),
+                () -> assertEquals("REFUNDED", pagesa.getStatus(), "Pagesa duhet të kalonte automatikisht në REFUNDED")
+        );
     }
 
-    private static void testStatusetAktive() {
-        Rezervim r = new Rezervim();
+    @Test
+    @DisplayName("Verifikimi i Statusit Aktiv")
+    void testStatusetAktive() {
+        rezervim.setStatus("PENDING");
+        assertTrue(rezervim.isActive());
 
-        r.setStatus("PENDING");
-        assert r.isActive() : "Gabim: PENDING duhet të jetë aktiv";
+        rezervim.setStatus("CONFIRMED");
+        assertTrue(rezervim.isActive());
 
-        r.setStatus("CONFIRMED");
-        assert r.isActive() : "Gabim: CONFIRMED duhet të jetë aktiv";
-
-        r.setStatus("CANCELLED");
-        assert !r.isActive() : "Gabim: CANCELLED nuk duhet të jetë aktiv";
-
-        System.out.println("  - Testi i Gjendjes Aktive: OK");
+        rezervim.setStatus("CANCELLED");
+        assertFalse(rezervim.isActive(), "Statusi CANCELLED nuk duhet të konsiderohet aktiv");
     }
 }

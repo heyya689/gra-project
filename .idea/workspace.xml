@@ -4,12 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="MODEL TESTING">
+    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="SQL DUMP">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/app/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/app/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/dao/BiznesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/dao/BiznesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/dao/KategoriDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/dao/KategoriDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/services/UserSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/services/UserSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/services/BiznesSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/services/BiznesSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/BiznesImazheTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/BiznesImazheTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/BiznesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/BiznesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/FAQTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/FAQTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/FaqjaKategoriTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/FaqjaKategoriTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/InventariTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/InventariTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/KategoriTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/KategoriTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/KontaktTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/KontaktTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/LokacionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/LokacionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/NotifikimeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/NotifikimeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatDetajeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatDetajeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatHistorikTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatHistorikTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/PagesatTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/PreferencaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/PreferencaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/RezervimTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/RezervimTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/RoleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/RoleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/model/VleresimTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/model/VleresimTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/BiznesDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/BiznesDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/BiznesImazheDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/BiznesImazheDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/InventariDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/InventariDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/KategoriDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/KategoriDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/PagesatDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/PagesatDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/RezervimDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/RezervimDAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/gra/tester/VleresimDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gra/tester/VleresimDAOTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +76,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BiznesImazheTest.executor": "Run",
     "Application.KontaktTest.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainApp.executor": "Coverage",
@@ -63,8 +85,19 @@
     "Application.TestConnection.executor": "Run",
     "Application.TestXAMPPConnection.executor": "Run",
     "Application.VleresimTest.executor": "Run",
+    "Application.model.executor": "Run",
+    "Application.tester.executor": "Run",
+    "JUnit.All in gra-project (1).executor": "Run",
+    "JUnit.All in gra-project (2).executor": "Run",
+    "JUnit.All in gra-project (3).executor": "Run",
+    "JUnit.All in gra-project (4).executor": "Run",
+    "JUnit.All in gra-project.executor": "Run",
     "JUnit.BiznesImazheDAOTest.executor": "Run",
     "JUnit.FAQDAOTest.executor": "Run",
+    "JUnit.TestConnectionJUnit.executor": "Run",
+    "JUnit.com.gra.app in gra-project.executor": "Run",
+    "JUnit.com.gra.model in gra-project.executor": "Run",
+    "JUnit.com.gra.tester in gra-project.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -91,7 +124,7 @@
       <recent name="com.gra.tester" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.com.gra.db in gra-project">
     <configuration name="MainApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gra.app.MainApp" />
       <module name="gra-project" />
@@ -105,6 +138,115 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SimpleTest" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.gra.app.SimpleTest" />
+      <module name="gra-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestConnection" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.gra.app.TestConnection" />
+      <module name="gra-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestXAMPPConnection" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.gra.test.TestXAMPPConnection" />
+      <module name="gra-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="model" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.gra.model" />
+      <module name="gra-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tester" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.gra.tester" />
+      <module name="gra-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in gra-project (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in gra-project (4)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.gra.app in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gra.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gra.app" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.gra.db in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gra.db.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gra.db" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.tester" />
+      <item itemvalue="Application.model" />
+      <item itemvalue="Application.TestXAMPPConnection" />
+      <item itemvalue="Application.TestConnection" />
+      <item itemvalue="Application.SimpleTest" />
+      <item itemvalue="Application.MainApp" />
+      <item itemvalue="JUnit.All in gra-project" />
+      <item itemvalue="JUnit.All in gra-project (1)" />
+      <item itemvalue="JUnit.All in gra-project (4)" />
+      <item itemvalue="JUnit.com.gra.app in gra-project" />
+      <item itemvalue="JUnit.com.gra.db in gra-project" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.com.gra.db in gra-project" />
+        <item itemvalue="JUnit.com.gra.app in gra-project" />
+        <item itemvalue="JUnit.All in gra-project (1)" />
+        <item itemvalue="JUnit.All in gra-project" />
+        <item itemvalue="JUnit.All in gra-project (4)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -136,7 +278,8 @@
       <workItem from="1765571318255" duration="17000" />
       <workItem from="1765571376065" duration="124000" />
       <workItem from="1767871838796" duration="2463000" />
-      <workItem from="1767874349015" duration="11533000" />
+      <workItem from="1767874349015" duration="11591000" />
+      <workItem from="1768153024200" duration="3253000" />
     </task>
     <task id="LOCAL-00001" summary="KEJDA_INITIAL STRUCTURE">
       <option name="closed" value="true" />
@@ -162,18 +305,61 @@
       <option name="project" value="LOCAL" />
       <updated>1767878290384</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Many-to-Many table relationship fix attempt">
+      <option name="closed" value="true" />
+      <created>1767887072855</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1767887072855</updated>
+    </task>
+    <task id="LOCAL-00005" summary="SQL DUMP">
+      <option name="closed" value="true" />
+      <created>1768153426023</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1768153426023</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -185,7 +371,9 @@
     <MESSAGE value="KEJDA_INITIAL STRUCTURE" />
     <MESSAGE value="UI ADDED" />
     <MESSAGE value="MODEL TESTING" />
-    <option name="LAST_COMMIT_MESSAGE" value="MODEL TESTING" />
+    <MESSAGE value="Many-to-Many table relationship fix attempt" />
+    <MESSAGE value="SQL DUMP" />
+    <option name="LAST_COMMIT_MESSAGE" value="SQL DUMP" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -200,7 +388,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/gra_project$MainApp.ic" NAME="MainApp Coverage Results" MODIFIED="1767886706552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/gra_project$MainApp.ic" NAME="MainApp Coverage Results" MODIFIED="1768153728027" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.gra.app.*</FILTER>
     </SUITE>
   </component>

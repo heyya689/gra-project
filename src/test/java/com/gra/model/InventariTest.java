@@ -1,83 +1,75 @@
 package com.gra.model;
 
-import java.time.LocalDateTime;
+import org.junit.jupiter.api.Test;
 
-public class InventariTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Inventari.java...");
+class InventariTest {
 
-        testMenaxhimiStokut();
-        testLlogaritjaVleresDheCmimit();
-        testDisponueshmeriaDheStatusi();
-        testUpdateTimestamps();
-
-        System.out.println("\n✅ Të gjitha testet për Inventari.java kaluan me sukses!");
-    }
-
-    private static void testMenaxhimiStokut() {
+    @Test
+    void testMenaxhimiStokut() {
         Inventari item = new Inventari(1, "Kafe Espresso", 10, 150.0);
 
-        // Testo rritjen e stokut
         item.increaseStock(5);
-        assert item.getSasi() == 15 : "Gabim: Stoku duhet të ishte 15";
+        assertEquals(15, item.getSasi(),
+                "Stoku duhet të ishte 15");
 
-        // Testo uljen e stokut
         item.decreaseStock(3);
-        assert item.getSasi() == 12 : "Gabim: Stoku duhet të ishte 12";
+        assertEquals(12, item.getSasi(),
+                "Stoku duhet të ishte 12");
 
-        // Testo parandalimin e uljes nën zero
         int sasiaParaGabimit = item.getSasi();
-        item.decreaseStock(20); // Më shumë se sa ka
-        assert item.getSasi() == sasiaParaGabimit : "Gabim: Stoku nuk duhet të ulet nëse sasia është e pamjaftueshme";
+        item.decreaseStock(20);
 
-        System.out.println("  - Testi i Menaxhimit të Stokut: OK");
+        assertEquals(sasiaParaGabimit, item.getSasi(),
+                "Stoku nuk duhet të ulet nëse sasia është e pamjaftueshme");
     }
 
-    private static void testLlogaritjaVleresDheCmimit() {
+    @Test
+    void testLlogaritjaVleresDheCmimit() {
         Inventari item = new Inventari(2, "Ujë 0.5L", 100, 50.0);
 
-        // Testo vlerën totale (100 * 50.0)
-        assert item.getTotalValue() == 5000.0 : "Gabim: Vlera totale duhet të jetë 5000.0";
+        assertEquals(5000.0, item.getTotalValue(),
+                "Vlera totale duhet të jetë 5000.0");
 
-        // Testo përditësimin e çmimit me vlerë negative (nuk duhet të lejohet)
         item.updatePrice(-10.0);
-        assert item.getCmimi() == 50.0 : "Gabim: Çmimi nuk duhet të pranojë vlera negative";
+        assertEquals(50.0, item.getCmimi(),
+                "Çmimi nuk duhet të pranojë vlera negative");
 
         item.updatePrice(60.0);
-        assert item.getCmimi() == 60.0 : "Gabim: Çmimi duhet të ishte 60.0";
-
-        System.out.println("  - Testi i Vlerës dhe Çmimit: OK");
+        assertEquals(60.0, item.getCmimi(),
+                "Çmimi duhet të ishte 60.0");
     }
 
-    private static void testDisponueshmeriaDheStatusi() {
+    @Test
+    void testDisponueshmeriaDheStatusi() {
         Inventari item = new Inventari();
+
         item.setSasi(5);
         item.activate();
 
-        // Testo nëse është available (Active + Sasi > 0)
-        assert item.isAvailable() : "Gabim: Produkti duhet të jetë available";
+        assertTrue(item.isAvailable(),
+                "Produkti duhet të jetë available");
 
-        // Testo kur sasia shkon zero
         item.setSasi(0);
-        assert !item.isAvailable() : "Gabim: Produkti nuk duhet të jetë available kur sasia është 0";
+        assertFalse(item.isAvailable(),
+                "Produkti nuk duhet të jetë available kur sasia është 0");
 
-        // Testo kur deaktivohet
         item.setSasi(10);
         item.deactivate();
-        assert !item.isAvailable() : "Gabim: Produkti nuk duhet të jetë available kur është inactive";
 
-        System.out.println("  - Testi i Disponueshmërisë: OK");
+        assertFalse(item.isAvailable(),
+                "Produkti nuk duhet të jetë available kur është inactive");
     }
 
-    private static void testUpdateTimestamps() {
+    @Test
+    void testUpdateTimestamps() {
         Inventari item = new Inventari();
         item.setUpdatedAt(null);
 
-        // Çdo ndryshim duhet të thërrasë LocalDateTime.now()
         item.updateStock(20);
-        assert item.getUpdatedAt() != null : "Gabim: updatedAt duhet të ishte plotësuar pas updateStock";
 
-        System.out.println("  - Testi i Timestamps: OK");
+        assertNotNull(item.getUpdatedAt(),
+                "updatedAt duhet të ishte plotësuar pas updateStock");
     }
 }

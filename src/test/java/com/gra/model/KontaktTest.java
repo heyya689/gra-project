@@ -1,82 +1,95 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
 
-public class KontaktTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Kontakt.java...");
+class KontaktTest {
 
-        testCikliStatusit();
-        testPreviewMesazhit();
-        testLogjikaEDergimit();
-        testUpdateTimestamps();
-
-        System.out.println("\n✅ Të gjitha testet për Kontakt.java kaluan me sukses!");
-    }
-
-    private static void testCikliStatusit() {
+    @Test
+    void testCikliStatusit() {
         Kontakt k = new Kontakt();
 
-        // 1. Fillimi: PENDING
-        assert k.getStatus().equals("PENDING") : "Gabim: Statusi fillestar duhet të jetë PENDING";
-        assert k.isOpen() : "Gabim: Mesazhi i ri duhet të jetë i hapur";
+        assertEquals("PENDING", k.getStatus(),
+                "Statusi fillestar duhet të jetë PENDING");
 
-        // 2. Mark as Read (vetëm nëse është PENDING ose SENT)
+        assertTrue(k.isOpen(),
+                "Mesazhi i ri duhet të jetë i hapur");
+
         k.markAsRead();
-        assert k.getStatus().equals("READ") : "Gabim: Statusi duhet të ishte READ";
+        assertEquals("READ", k.getStatus(),
+                "Statusi duhet të ishte READ");
 
-        // 3. Reply (vetëm nëse është READ)
         k.reply();
-        assert k.getStatus().equals("REPLIED") : "Gabim: Statusi duhet të ishte REPLIED";
+        assertEquals("REPLIED", k.getStatus(),
+                "Statusi duhet të ishte REPLIED");
 
-        // 4. Close
         k.close();
-        assert k.getStatus().equals("CLOSED") : "Gabim: Statusi duhet të ishte CLOSED";
-        assert !k.isOpen() : "Gabim: Mesazhi i mbyllur nuk duhet të jetë i hapur";
+        assertEquals("CLOSED", k.getStatus(),
+                "Statusi duhet të ishte CLOSED");
 
-        System.out.println("  - Testi i Ciklit të Statusit: OK");
+        assertFalse(k.isOpen(),
+                "Mesazhi i mbyllur nuk duhet të jetë i hapur");
     }
 
-    private static void testPreviewMesazhit() {
+    @Test
+    void testPreviewMesazhit() {
         Kontakt k = new Kontakt();
 
-        // Rasti 1: Mesazh i shkurtër
         k.setMesazh("Përshëndetje!");
-        assert k.getPreview().equals("Përshëndetje!") : "Gabim: Preview i shkurtër nuk duhet të ndryshojë";
+        assertEquals("Përshëndetje!",
+                k.getPreview(),
+                "Preview i shkurtër nuk duhet të ndryshojë");
 
-        // Rasti 2: Mesazh i gjatë (> 100 karaktere)
         String mesazhIGjate = "Ky është një mesazh shumë i gjatë i cili shërben për të testuar nëse " +
                 "metoda getPreview funksionon saktë dhe e shkurton tekstin në limitin e duhur.";
+
         k.setMesazh(mesazhIGjate);
 
         String preview = k.getPreview();
-        assert preview.length() == 100 : "Gabim: Preview duhet të jetë saktësisht 100 karaktere";
-        assert preview.endsWith("...") : "Gabim: Preview duhet të përfundojë me '...'";
 
-        System.out.println("  - Testi i Preview-t: OK");
+        assertEquals(100,
+                preview.length(),
+                "Preview duhet të jetë saktësisht 100 karaktere");
+
+        assertTrue(preview.endsWith("..."),
+                "Preview duhet të përfundojë me '...'");
     }
 
-    private static void testLogjikaEDergimit() {
+    @Test
+    void testLogjikaEDergimit() {
         Kontakt k = new Kontakt();
+
         k.setSubjekti("Ankesë");
         k.setMesazh("Nuk funksionon kodi.");
         k.setEmail("test@example.com");
 
-        k.sendMessage(); // Kjo do të printojë në konsolë
-        assert k.getStatus().equals("SENT") : "Gabim: Pas dërgimit statusi duhet të jetë SENT";
+        k.sendMessage();
 
-        System.out.println("  - Testi i Dërgimit: OK");
+        assertEquals("SENT",
+                k.getStatus(),
+                "Pas dërgimit statusi duhet të jetë SENT");
     }
 
-    private static void testUpdateTimestamps() {
+    @Test
+    void testUpdateTimestamps() {
         Kontakt k = new Kontakt();
-        LocalDateTime kohaePare = k.getUpdatedAt();
+        LocalDateTime updatedBefore = k.getUpdatedAt();
 
-        // Presim pak që të ndryshojë koha (opsionale në teste kaq të shpejta)
         k.markAsRead();
-        assert k.getUpdatedAt() != null : "Gabim: updatedAt duhet të përditësohet";
 
-        System.out.println("  - Testi i Timestamps: OK");
+        assertNotNull(k.getUpdatedAt(),
+                "updatedAt duhet të përditësohet");
+
+        // Optional safety check (nëse updatedAt ndryshohet realisht)
+        if (updatedBefore != null) {
+            assertTrue(
+                    k.getUpdatedAt().isAfter(updatedBefore) ||
+                            k.getUpdatedAt().isEqual(updatedBefore),
+                    "updatedAt duhet të përditësohet pas ndryshimit të statusit"
+            );
+        }
     }
 }

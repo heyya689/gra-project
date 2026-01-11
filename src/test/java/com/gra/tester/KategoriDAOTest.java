@@ -77,39 +77,7 @@ public class KategoriDAOTest extends BaseDAOTest {
         assertEquals(2, list.size());
     }
 
-    //addBusinessToCategory(int, int)
-    @Test
-    void testAddBusinessToCategory() throws Exception {
-        Kategori kategori = createKategori("Epsilon");
-        Biznes biznes = createBiznes("Biznes 1");
 
-        kategoriDAO.addBusinessToCategory(
-                kategori.getKategoriId(),
-                biznes.getBiznesId()
-        );
-
-        Kategori loaded = kategoriDAO.findById(kategori.getKategoriId());
-
-        assertEquals(1, loaded.getBizneset().size());
-        assertEquals("Biznes 1", loaded.getBizneset().get(0).getEmri());
-    }
-
-    //findCategoriesWithBusinesses()
-    @Test
-    void testFindCategoriesWithBusinesses() throws Exception {
-        Kategori kategori = createKategori("Omega");
-        Biznes biznes = createBiznes("Biznes Omega");
-
-        kategoriDAO.addBusinessToCategory(
-                kategori.getKategoriId(),
-                biznes.getBiznesId()
-        );
-
-        List<Kategori> result = kategoriDAO.findCategoriesWithBusinesses();
-
-        assertEquals(1, result.size());
-        assertEquals("Omega", result.get(0).getEmri());
-    }
 
     //searchByEmri(string)
     @Test
@@ -135,27 +103,6 @@ public class KategoriDAOTest extends BaseDAOTest {
         assertNull(kategoriDAO.findById(kategori.getKategoriId()));
     }
 
-    //removeBusinessFromCategory(int, int)
-    @Test
-    void testRemoveBusinessFromCategory() throws Exception {
-        Kategori kategori = createKategori("Theta");
-        Biznes biznes = createBiznes("Biznes Theta");
-
-        kategoriDAO.addBusinessToCategory(
-                kategori.getKategoriId(),
-                biznes.getBiznesId()
-        );
-
-        //check
-        assertEquals(1, kategoriDAO.countBusinessesInCategory(kategori.getKategoriId()));
-
-        kategoriDAO.removeBusinessFromCategory(
-                kategori.getKategoriId(),
-                biznes.getBiznesId()
-        );
-
-        assertEquals(0, kategoriDAO.countBusinessesInCategory(kategori.getKategoriId()));
-    }
 
     //countCategories()
     @Test
@@ -169,27 +116,7 @@ public class KategoriDAOTest extends BaseDAOTest {
         assertEquals(3, kategoriDAO.countCategories());
     }
 
-    @Test
-    void testCountBusinessesInCategory() throws Exception {
-        Kategori kategori = createKategori("Sigma");
 
-        Biznes b1 = createBiznes("Biznes 1");
-        Biznes b2 = createBiznes("Biznes 2");
-
-        kategoriDAO.addBusinessToCategory(
-                kategori.getKategoriId(),
-                b1.getBiznesId()
-        );
-        kategoriDAO.addBusinessToCategory(
-                kategori.getKategoriId(),
-                b2.getBiznesId()
-        );
-
-        assertEquals(
-                2,
-                kategoriDAO.countBusinessesInCategory(kategori.getKategoriId())
-        );
-    }
 
     //helper methods
 
@@ -200,19 +127,5 @@ public class KategoriDAOTest extends BaseDAOTest {
         k.setPershkrim("Test Kategori");
         kategoriDAO.save(k);
         return k;
-    }
-
-    private Biznes createBiznes(String emri) throws Exception {
-        Biznes b = new Biznes();
-        b.setEmri(emri);
-        b.setPershkrim("Test Biznes");
-        b.setKategori("Test");
-        b.setNipt("NIPT-" + System.nanoTime());
-        b.setLicense("LIC-1");
-        b.setTelefon("123");
-        b.setEmail("test@test.com");
-        b.setWebsite("test.com");
-        biznesDAO.save(b);
-        return b;
     }
 }

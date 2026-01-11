@@ -1,78 +1,75 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
-public class FAQTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin e korrigjuar për FAQ.java...");
+class FAQTest {
 
-        testLogjikaEStatusit();
-        testShkurtimiIPergjigjes();
-        testMenaxhimiKategorive();
-        testKonstruktoriMeParametra();
-
-        System.out.println("\n✅ Të gjitha testet për FAQ.java kaluan me sukses!");
-    }
-
-    private static void testLogjikaEStatusit() {
+    @Test
+    void testLogjikaEStatusit() {
         FAQ faq = new FAQ();
 
-        // Default duhet te jete true
-        assert faq.isActive() : "Gabim: FAQ duhet të jetë aktive si default";
+        assertTrue(faq.isActive(),
+                "FAQ duhet të jetë aktive si default");
 
         faq.deactivate();
-        assert !faq.isActive() : "Gabim: FAQ duhet të ishte jo-aktive pas deactivate()";
+        assertFalse(faq.isActive(),
+                "FAQ duhet të ishte jo-aktive pas deactivate()");
 
         faq.activate();
-        assert faq.isActive() : "Gabim: FAQ duhet të ishte aktive pas activate()";
-
-        System.out.println("  - Testi i Statusit: OK");
+        assertTrue(faq.isActive(),
+                "FAQ duhet të ishte aktive pas activate()");
     }
 
-    private static void testShkurtimiIPergjigjes() {
+    @Test
+    void testShkurtimiIPergjigjes() {
         FAQ faq = new FAQ();
-        faq.setPergjigje("Ky eshte nje tekst i gjate per test."); // 34 karaktere
+        faq.setPergjigje("Ky eshte nje tekst i gjate per test.");
 
-        // Test kur nuk duhet te shkurtohet
-        assert faq.getShortAnswer(50).equals(faq.getPergjigje()) : "Gabim: Nuk duhej shkurtuar";
+        assertEquals(faq.getPergjigje(),
+                faq.getShortAnswer(50),
+                "Nuk duhej shkurtuar");
 
-        // Test kur duhet te shkurtohet ne 10
         String shortAns = faq.getShortAnswer(10);
-        assert shortAns.length() <= 10 : "Gabim: Tejkalon gjatesine 10";
-        assert shortAns.endsWith("...") : "Gabim: Duhet te perfundoje me ...";
 
-        System.out.println("  - Testi i Shkurtimit: OK");
+        assertTrue(shortAns.length() <= 10,
+                "Tejkalon gjatesine 10");
+
+        assertTrue(shortAns.endsWith("..."),
+                "Duhet te perfundoje me ...");
     }
 
-    private static void testMenaxhimiKategorive() {
+    @Test
+    void testMenaxhimiKategorive() {
         FAQ faq = new FAQ();
 
-        // Krijojme kategorine (duke perdorur settera qe te jemi te sigurt me modelin tend)
         FaqjaKategori k1 = new FaqjaKategori();
         k1.setKategoriId(1);
         k1.setEmri("Ndihme");
 
         faq.addKategori(k1);
-        faq.addKategori(k1); // Provo duplikat
+        faq.addKategori(k1);
 
-        // Testo nese contains punon (varet nese ke bere override equals te FaqjaKategori)
-        // Nese nuk ke bere override equals, ky assert mund te deshtoje nese jane objekte te ndryshme
-        assert faq.getKategorite().size() == 1 : "Gabim: U shtua duplikat";
+        assertEquals(1,
+                faq.getKategorite().size(),
+                "Nuk duhet te lejohen kategori duplikat");
 
         List<String> emrat = faq.getKategoriEmer();
-        assert emrat.get(0).equals("Ndihme") : "Gabim: Emri i kategorise nuk eshte korrekt";
 
-        System.out.println("  - Testi i Kategorive: OK");
+        assertEquals("Ndihme",
+                emrat.get(0),
+                "Emri i kategorise nuk eshte korrekt");
     }
 
-    private static void testKonstruktoriMeParametra() {
+    @Test
+    void testKonstruktoriMeParametra() {
         FAQ faq = new FAQ(5, "Pyetje?", "Pergjigje.");
 
-        assert faq.getFaqId() == 5;
-        assert faq.getPyetje().equals("Pyetje?");
-        assert faq.getAnswer().equals("Pergjigje.");
-
-        System.out.println("  - Testi i Konstruktorit: OK");
+        assertEquals(5, faq.getFaqId());
+        assertEquals("Pyetje?", faq.getPyetje());
+        assertEquals("Pergjigje.", faq.getAnswer());
     }
 }

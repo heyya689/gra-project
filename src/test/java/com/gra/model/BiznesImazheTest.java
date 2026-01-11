@@ -1,78 +1,69 @@
 package com.gra.model;
 
-public class BiznesImazheTest {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🖼️ Duke nisur testimin për BiznesImazhe.java...");
+class BiznesImazheTest {
 
-        testFullUrlGeneration();
-        testIsImageValidation();
-        testFileExtensionExtraction();
-        testPrimaryStatus();
-
-        System.out.println("\n✅ Të gjitha testet për BiznesImazhe kaluan me sukses!");
-    }
-
-    private static void testFullUrlGeneration() {
+    @Test
+    void testFullUrlGeneration() {
         BiznesImazhe img1 = new BiznesImazhe();
         img1.setUrl("hotel.jpg");
 
-        // Testo URL-ne relative
-        assert img1.getFullUrl().equals("https://gra-system.com/uploads/hotel.jpg")
-                : "Gabim në gjenerimin e URL-së relative";
+        assertEquals(
+                "https://gra-system.com/uploads/hotel.jpg",
+                img1.getFullUrl(),
+                "Gabim në gjenerimin e URL-së relative"
+        );
 
-        // Testo URL-ne absolute
         BiznesImazhe img2 = new BiznesImazhe();
         img2.setUrl("http://external-link.com/photo.png");
-        assert img2.getFullUrl().equals("http://external-link.com/photo.png")
-                : "Gabim: URL-ja absolute nuk duhet të ndryshojë";
 
-        System.out.println("  - Testi i URL-së: OK");
+        assertEquals(
+                "http://external-link.com/photo.png",
+                img2.getFullUrl(),
+                "Gabim: URL-ja absolute nuk duhet të ndryshojë"
+        );
     }
 
-    private static void testIsImageValidation() {
+    @Test
+    void testIsImageValidation() {
         BiznesImazhe img = new BiznesImazhe();
 
-        // Formate të sakta
         img.setUrl("foto.PNG");
-        assert img.isImage() : "Gabim: .PNG duhet të njihet si imazh";
+        assertTrue(img.isImage(), ".PNG duhet të njihet si imazh");
 
         img.setUrl("logo.gif");
-        assert img.isImage() : "Gabim: .gif duhet të njihet si imazh";
+        assertTrue(img.isImage(), ".gif duhet të njihet si imazh");
 
-        // Formate të gabuara
         img.setUrl("dokument.pdf");
-        assert !img.isImage() : "Gabim: .pdf NUK është imazh";
+        assertFalse(img.isImage(), ".pdf NUK është imazh");
 
         img.setUrl(null);
-        assert !img.isImage() : "Gabim: null nuk duhet të jetë imazh";
-
-        System.out.println("  - Testi i validimit të formatit: OK");
+        assertFalse(img.isImage(), "null nuk duhet të jetë imazh");
     }
 
-    private static void testFileExtensionExtraction() {
+    @Test
+    void testFileExtensionExtraction() {
         BiznesImazhe img = new BiznesImazhe();
 
         img.setUrl("pamja_detit.jpeg");
-        assert img.getFileExtension().equals("jpeg") : "Gabim në nxjerrjen e extension";
+        assertEquals("jpeg", img.getFileExtension());
 
         img.setUrl("pa-prapashtese");
-        assert img.getFileExtension().equals("") : "Gabim: Duhet të kthente string bosh";
-
-        System.out.println("  - Testi i prapashtesës (Extension): OK");
+        assertEquals("", img.getFileExtension());
     }
 
-    private static void testPrimaryStatus() {
+    @Test
+    void testPrimaryStatus() {
         BiznesImazhe img = new BiznesImazhe();
 
-        assert !img.isPrimary() : "Default duhet të jetë false";
+        assertFalse(img.isPrimary(), "Default duhet të jetë false");
 
         img.setAsPrimary();
-        assert img.isPrimary() : "Duhet të ishte true pas setAsPrimary()";
+        assertTrue(img.isPrimary(), "Duhet të ishte true pas setAsPrimary()");
 
         img.removeAsPrimary();
-        assert !img.isPrimary() : "Duhet të ishte false pas removeAsPrimary()";
-
-        System.out.println("  - Testi i statusit primar: OK");
+        assertFalse(img.isPrimary(), "Duhet të ishte false pas removeAsPrimary()");
     }
 }

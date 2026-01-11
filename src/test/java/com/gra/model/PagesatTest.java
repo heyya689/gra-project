@@ -1,71 +1,83 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+
 import java.util.List;
 
-public class PagesatTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Pagesat.java...");
+@DisplayName("Testet për Menaxhimin e Pagesave (Pagesat.java)")
+class PagesatTest {
 
-        testProcesimiISukesshem();
-        testLogjikaERimbursimit();
-        testMenaxhimiHistorikut();
-        testValidimiGjendjes();
+    private Pagesat pagesa;
 
-        System.out.println("\n✅ Të gjitha testet për Pagesat.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        // Inicializojmë një pagesë tipike për çdo test
+        pagesa = new Pagesat(1, 5000.0, "CREDIT_CARD");
     }
 
-    private static void testProcesimiISukesshem() {
-        Pagesat pagesa = new Pagesat(1, 5000.0, "CREDIT_CARD");
-
-        // Fillimisht duhet të jetë PENDING
-        assert pagesa.isPending() : "Gabim: Pagesa e re duhet të jetë PENDING";
+    @Test
+    @DisplayName("Procesimi i një pagese të re")
+    void testProcesimiISukesshem() {
+        // Kontrolli fillestar
+        assertTrue(pagesa.isPending(), "Pagesa e re duhet të ketë statusin PENDING");
 
         boolean rezultati = pagesa.processPayment();
 
-        assert rezultati : "Gabim: Procesimi duhet të kthente true";
-        assert pagesa.isCompleted() : "Gabim: Statusi duhet të ishte COMPLETED";
-        assert pagesa.getTransactionId() != null : "Gabim: TransactionID duhet të ishte gjeneruar";
-        assert pagesa.getPaymentDate() != null : "Gabim: Data e pagesës duhet të ishte regjistruar";
-
-        System.out.println("  - Testi i Procesimit: OK");
+        assertAll("Verifikimi i rezultateve pas procesimit",
+                () -> assertTrue(rezultati, "Metoda processPayment duhet të kthejë true"),
+                () -> assertTrue(pagesa.isCompleted(), "Statusi duhet të kalojë në COMPLETED"),
+                () -> assertNotNull(pagesa.getTransactionId(), "Duhet të gjenerohet një Transaction ID"),
+                () -> assertNotNull(pagesa.getPaymentDate(), "Data e pagesës duhet të regjistrohet")
+        );
     }
 
-    private static void testLogjikaERimbursimit() {
-        Pagesat pagesa = new Pagesat(2, 2500.0, "CASH");
+    @Nested
+    @DisplayName("Logjika e Rimbursimit (Refund)")
+    class RefundTests {
 
-        // Nuk mund të bësh refund një pagesë që nuk ka përfunduar (is PENDING)
-        assert !pagesa.refund() : "Gabim: Refund nuk duhet të lejohet për statusin PENDING";
+        @Test
+        @DisplayName("Dështimi i rimbursimit për pagesat PENDING")
+        void testRefundPending() {
+            assertFalse(pagesa.refund(), "Rimbursimi nuk duhet të lejohet nëse statusi është PENDING");
+            assertFalse(pagesa.isRefunded());
+        }
 
-        pagesa.processPayment(); // Kalon në COMPLETED
-        boolean uRimbursua = pagesa.refund();
+        @Test
+        @DisplayName("Rimbursimi i suksesshëm pas përfundimit të pagesës")
+        void testRefundCompleted() {
+            pagesa.processPayment(); // Kalon në COMPLETED
+            boolean uRimbursua = pagesa.refund();
 
-        assert uRimbursua : "Gabim: Rimbursimi duhet të ishte i suksesshëm";
-        assert pagesa.isRefunded() : "Gabim: Statusi duhet të ishte REFUNDED";
-
-        System.out.println("  - Testi i Rimbursimit (Refund): OK");
+            assertTrue(uRimbursua, "Rimbursimi duhet të kryhet me sukses për pagesat COMPLETED");
+            assertTrue(pagesa.isRefunded(), "Statusi final duhet të jetë REFUNDED");
+        }
     }
 
-    private static void testMenaxhimiHistorikut() {
-        Pagesat pagesa = new Pagesat();
+    @Test
+    @DisplayName("Menaxhimi i Historikut të Veprimeve")
+    void testMenaxhimiHistorikut() {
         pagesa.addToHistory("INITIALIZED", "Pagesa u krijua në sistem");
-
-        pagesa.processPayment(); // Shton automatikisht historikun e dytë
+        pagesa.processPayment();
 
         List<PagesatHistorik> historia = pagesa.getHistoriku();
-        assert historia.size() == 2 : "Gabim: Historiku duhet të kishte 2 hyrje";
-        assert historia.get(1).getStatus().equals("COMPLETED") : "Gabim: Hyrja e dytë e historikut duhet të ishte COMPLETED";
 
-        System.out.println("  - Testi i Historikut: OK");
+        assertEquals(2, historia.size(), "Historiku duhet të ketë saktësisht 2 regjistrime");
+        assertEquals("COMPLETED", historia.get(1).getStatus());
     }
 
-    private static void testValidimiGjendjes() {
-        Pagesat pagesa = new Pagesat();
+    @Test
+    @DisplayName("Validimi i gjendjes kur pagesa dështon")
+    void testValidimiGjendjes() {
         pagesa.setStatus("FAILED");
 
-        assert pagesa.isFailed() : "Gabim: isFailed() duhet të kthente true";
-        assert !pagesa.processPayment() : "Gabim: Një pagesë e dështuar nuk mund të procesohet përsëri pa u resetuar";
-
-        System.out.println("  - Testi i Validimit të Gjendjes: OK");
+        assertAll("Integriteti i gjendjes FAILED",
+                () -> assertTrue(pagesa.isFailed()),
+                () -> assertFalse(pagesa.processPayment(), "Një pagesë FAILED nuk duhet të procesohet dot përsëri")
+        );
     }
 }

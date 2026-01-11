@@ -1,58 +1,66 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import java.time.LocalDateTime;
 
-public class PagesatHistorikTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për PagesatHistorik.java...");
+@DisplayName("Testet për Historikun e Pagesave")
+class PagesatHistorikTest {
 
-        testIdentifikimiStatusit();
-        testInicializimiIDates();
-        testKonstruktoret();
+    private PagesatHistorik historik;
 
-        System.out.println("\n✅ Të gjitha testet për PagesatHistorik.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        historik = new PagesatHistorik();
     }
 
-    private static void testIdentifikimiStatusit() {
-        // Testo raste suksesi
-        PagesatHistorik h1 = new PagesatHistorik("COMPLETED", "Pagesa u krye");
-        assert h1.isSuccess() : "Gabim: COMPLETED duhet të njihet si sukses";
-        assert !h1.isFailure() : "Gabim: Suksesi nuk duhet të njihet si dështim";
-
-        PagesatHistorik h2 = new PagesatHistorik("APPROVED", "OK");
-        assert h2.isSuccess() : "Gabim: APPROVED duhet të njihet si sukses";
-
-        // Testo raste dështimi
-        PagesatHistorik h3 = new PagesatHistorik("FAILED", "Mungesë fondesh");
-        assert h3.isFailure() : "Gabim: FAILED duhet të njihet si dështim";
-        assert !h3.isSuccess() : "Gabim: Dështimi nuk duhet të njihet si sukses";
-
-        PagesatHistorik h4 = new PagesatHistorik("DECLINED", "Kodi i gabuar");
-        assert h4.isFailure() : "Gabim: DECLINED duhet të njihet si dështim";
-
-        System.out.println("  - Testi i Identifikimit të Statusit: OK");
+    @ParameterizedTest
+    @ValueSource(strings = {"COMPLETED", "APPROVED"})
+    @DisplayName("Statuset që duhet të njihen si SUKSES")
+    void testIdentifikimiStatusitSukses(String status) {
+        PagesatHistorik h = new PagesatHistorik(status, "Mesazh testimi");
+        assertTrue(h.isSuccess(), "Statusi " + status + " duhet të njihet si sukses");
+        assertFalse(h.isFailure(), "Statusi i suksesshëm nuk duhet të jetë failure");
     }
 
-    private static void testInicializimiIDates() {
-        PagesatHistorik h = new PagesatHistorik();
-
-        // Verifikojmë që data nuk është null dhe është koha e tanishme
-        assert h.getData() != null : "Gabim: Data duhet të inicializohej automatikisht";
-        assert h.getData().isBefore(LocalDateTime.now().plusSeconds(1)) : "Gabim: Data e regjistrimit është e pasaktë";
-
-        System.out.println("  - Testi i Inicializimit të Datës: OK");
+    @ParameterizedTest
+    @ValueSource(strings = {"FAILED", "DECLINED", "ERROR"})
+    @DisplayName("Statuset që duhet të njihen si DËSHTIM")
+    void testIdentifikimiStatusitDeshtim(String status) {
+        PagesatHistorik h = new PagesatHistorik(status, "Mesazh gabimi");
+        assertTrue(h.isFailure(), "Statusi " + status + " duhet të njihet si dështim");
+        assertFalse(h.isSuccess(), "Statusi i dështuar nuk duhet të jetë success");
     }
 
-    private static void testKonstruktoret() {
-        PagesatHistorik h = new PagesatHistorik("ERROR", "Lidhja dështoi");
+    @Test
+    @DisplayName("Verifikimi i inicializimit automatik të datës")
+    void testInicializimiIDates() {
+        assertNotNull(historik.getData(), "Data duhet të inicializohej automatikisht në konstruktor");
 
-        assert h.getStatus().equals("ERROR");
-        assert h.getMesazh().equals("Lidhja dështoi");
+        // Kontrollojmë që data e krijuar është shumë afër kohës aktuale (brenda 2 sekondave)
+        LocalDateTime tani = LocalDateTime.now();
+        assertTrue(historik.getData().isBefore(tani.plusSeconds(1)), "Data nuk duhet të jetë në të ardhmen");
+        assertTrue(historik.getData().isAfter(tani.minusSeconds(2)), "Data është shumë e vjetër");
+    }
 
-        // Verifikojmë metodën e printimit (opsionale)
-        h.addRecord();
+    @Test
+    @DisplayName("Testimi i konstruktorit me parametra")
+    void testKonstruktoret() {
+        String statusi = "PENDING";
+        String mesazhi = "Duke pritur konfirmimin";
 
-        System.out.println("  - Testi i Konstruktorëve: OK");
+        PagesatHistorik h = new PagesatHistorik(statusi, mesazhi);
+
+        assertAll("Verifikimi i atributeve të konstruktorit",
+                () -> assertEquals(statusi, h.getStatus()),
+                () -> assertEquals(mesazhi, h.getMesazh()),
+                () -> assertNotNull(h.getData())
+        );
     }
 }

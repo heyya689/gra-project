@@ -1,18 +1,13 @@
 package com.gra.model;
 
-public class LokacionTest {
+import org.junit.jupiter.api.Test;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për Lokacion.java...");
+import static org.junit.jupiter.api.Assertions.*;
 
-        testFormatimiAdreses();
-        testLlogaritjaDistances();
-        testValidimiKoordinatave();
+class LokacionTest {
 
-        System.out.println("\n✅ Të gjitha testet për Lokacion.java kaluan me sukses!");
-    }
-
-    private static void testFormatimiAdreses() {
+    @Test
+    void testFormatimiAdreses() {
         Lokacion lok = new Lokacion();
         lok.setRruga("Rruga e Durrësit");
         lok.setNumri("15");
@@ -22,14 +17,15 @@ public class LokacionTest {
 
         String adresaEPlote = lok.formatAddress();
 
-        // Verifikojmë që pjesët janë bashkuar saktë me presje dhe hapësira
-        assert adresaEPlote.contains("Rruga e Durrësit 15") : "Gabim në formatimin e rrugës dhe numrit";
-        assert adresaEPlote.contains("Tiranë 1001") : "Gabim në qytet dhe zip code";
+        assertTrue(adresaEPlote.contains("Rruga e Durrësit 15"),
+                "Gabim në formatimin e rrugës dhe numrit");
 
-        System.out.println("  - Testi i Formatimit të Adresës: OK");
+        assertTrue(adresaEPlote.contains("Tiranë 1001"),
+                "Gabim në qytet dhe zip code");
     }
 
-    private static void testLlogaritjaDistances() {
+    @Test
+    void testLlogaritjaDistances() {
         // Lokacioni 1: Tiranë (Sheshi Skënderbej)
         Lokacion tirana = new Lokacion();
         tirana.setLatitude(41.3275);
@@ -42,26 +38,31 @@ public class LokacionTest {
 
         double distanca = tirana.calculateDistance(durres);
 
-        // Distanca ajrore Tiranë-Durrës është rreth 30-31 km
-        assert distanca > 30 && distanca < 32 : "Gabim: Distanca e llogaritur " + distanca + " km nuk është brenda pritshmërive";
+        // Distanca ajrore Tiranë–Durrës ≈ 30–31 km
+        assertTrue(distanca > 30 && distanca < 32,
+                "Distanca e llogaritur nuk është brenda pritshmërive: " + distanca);
 
-        // Testo distancën me veten (duhet të jetë 0)
-        assert tirana.calculateDistance(tirana) == 0.0 : "Gabim: Distanca me veten duhet të jetë 0";
-
-        System.out.println("  - Testi i Formulës Haversine (Distanca): OK");
+        assertEquals(0.0,
+                tirana.calculateDistance(tirana),
+                "Distanca me veten duhet të jetë 0");
     }
 
-    private static void testValidimiKoordinatave() {
-        Lokacion lok1 = new Lokacion(); // Pa koordinata
+    @Test
+    void testValidimiKoordinatave() {
+        Lokacion lok1 = new Lokacion(); // pa koordinata
+
         Lokacion lok2 = new Lokacion();
         lok2.setLatitude(41.0);
         lok2.setLongitude(19.0);
 
-        // Duhet të kthejë -1 sepse lok1 nuk ka koordinata
-        assert lok1.calculateDistance(lok2) == -1 : "Gabim: Duhet të kthente -1 për koordinata mungesë";
-        assert !lok1.hasCoordinates() : "Gabim: hasCoordinates duhet të jetë false";
-        assert lok2.hasCoordinates() : "Gabim: hasCoordinates duhet të jetë true";
+        assertEquals(-1,
+                lok1.calculateDistance(lok2),
+                "Duhet të kthente -1 kur mungojnë koordinatat");
 
-        System.out.println("  - Testi i Validimit të Koordinatave: OK");
+        assertFalse(lok1.hasCoordinates(),
+                "hasCoordinates duhet të jetë false kur mungojnë koordinatat");
+
+        assertTrue(lok2.hasCoordinates(),
+                "hasCoordinates duhet të jetë true kur koordinatat janë të pranishme");
     }
 }

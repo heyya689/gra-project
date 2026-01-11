@@ -1,66 +1,69 @@
 package com.gra.model;
 
-public class PagesatDetajeTest {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për PagesatDetaje.java...");
+import static org.junit.jupiter.api.Assertions.*;
 
-        testValidimiReferences();
-        testInterpretimiPergjigjesGateway();
-        testTimestampsDheAtributet();
+@DisplayName("Testet për Modelin PagesatDetaje")
+class PagesatDetajeTest {
 
-        System.out.println("\n✅ Të gjitha testet për PagesatDetaje.java kaluan me sukses!");
+    private PagesatDetaje detaje;
+
+    @BeforeEach
+    void setUp() {
+        // Inicializojmë objektin para çdo testi për të pasur një gjendje të pastër
+        detaje = new PagesatDetaje();
     }
 
-    private static void testValidimiReferences() {
-        PagesatDetaje detaje = new PagesatDetaje();
-
+    @Test
+    @DisplayName("Validimi i Referencës - Raste të ndryshme")
+    void testValidimiReferences() {
         // Rasti 1: Referencë shumë e shkurtër
         detaje.setReference("12345");
-        assert !detaje.validateReference() : "Gabim: Referenca duhet të jetë të paktën 10 karaktere";
+        assertFalse(detaje.validateReference(), "Referenca duhet të jetë të paktën 10 karaktere");
 
         // Rasti 2: Referencë e saktë
         detaje.setReference("REF-2024-ALB-99");
-        assert detaje.validateReference() : "Gabim: Referenca e saktë nuk u pranua";
+        assertTrue(detaje.validateReference(), "Referenca e saktë duhet të pranohet");
 
         // Rasti 3: Referencë null
         detaje.setReference(null);
-        assert !detaje.validateReference() : "Gabim: Referenca null nuk duhet të jetë e vlefshme";
-
-        System.out.println("  - Testi i Validimit të Referencës: OK");
+        assertFalse(detaje.validateReference(), "Referenca null nuk duhet të jetë e vlefshme");
     }
 
-    private static void testInterpretimiPergjigjesGateway() {
-        PagesatDetaje detaje = new PagesatDetaje();
-
-        // Testo SUCCESS
+    @Test
+    @DisplayName("Interpretimi i përgjigjeve nga Gateway")
+    void testInterpretimiPergjigjesGateway() {
+        // Testo SUCCESSFUL
         detaje.setGatewayResponse("Transaction SUCCESSFUL");
-        assert detaje.isResponseSuccessful() : "Gabim: Duhet të interpretonte SUCCESSFUL si sukses";
+        assertTrue(detaje.isResponseSuccessful(), "Duhet të interpretonte SUCCESSFUL si sukses");
 
-        // Testo APPROVED (me shkronja të vogla për të testuar toUpperCase)
+        // Testo APPROVED
         detaje.setGatewayResponse("payment approved");
-        assert detaje.isResponseSuccessful() : "Gabim: Duhet të interpretonte approved si sukses";
+        assertTrue(detaje.isResponseSuccessful(), "Duhet të interpretonte approved si sukses");
 
         // Testo FAILED
         detaje.setGatewayResponse("ERROR: Insufficient funds");
-        assert !detaje.isResponseSuccessful() : "Gabim: Një gabim nuk duhet të njihet si sukses";
-
-        System.out.println("  - Testi i Përgjigjes së Gateway: OK");
+        assertFalse(detaje.isResponseSuccessful(), "Një gabim nuk duhet të njihet si sukses");
     }
 
-    private static void testTimestampsDheAtributet() {
-        PagesatDetaje detaje = new PagesatDetaje();
+    @Test
+    @DisplayName("Verifikimi i Timestamps dhe Atributeve Teknike")
+    void testTimestampsDheAtributet() {
+        // Verifikojmë që createdAt është null fillimisht
+        assertNull(detaje.getCreatedAt());
 
-        // Verifikojmë që createdAt vendoset kur marrim përgjigjen e parë
-        assert detaje.getCreatedAt() == null;
+        // Verifikojmë inicializimin automatik pas përgjigjes
         detaje.setGatewayResponse("OK");
-        assert detaje.getCreatedAt() != null : "Gabim: createdAt duhet të inicializohej automatikisht";
+        assertNotNull(detaje.getCreatedAt(), "createdAt duhet të inicializohej automatikisht");
 
         // Verifikojmë atributet teknike
         detaje.setCardLastFour("4242");
         detaje.setIpAddress("192.168.1.1");
-        assert detaje.getCardLastFour().equals("4242");
 
-        System.out.println("  - Testi i Atributeve Teknike: OK");
+        assertEquals("4242", detaje.getCardLastFour());
+        assertEquals("192.168.1.1", detaje.getIpAddress());
     }
 }

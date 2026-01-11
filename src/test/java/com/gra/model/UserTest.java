@@ -1,86 +1,96 @@
 package com.gra.model;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import java.util.ArrayList;
-import java.util.List;
 
-public class UserTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public static void main(String[] args) {
-        System.out.println("🧪 Duke nisur testimin për User.java...");
+@DisplayName("Testet për Klasën User (Përdoruesi)")
+class UserTest {
 
-        testAutentikimiLogin();
-        testUpdateProfile();
-        testMenaxhimiRoleve();
-        testInicializimiListave();
+    private User user;
 
-        System.out.println("\n✅ Të gjitha testet për User.java kaluan me sukses!");
+    @BeforeEach
+    void setUp() {
+        // Krijojmë një përdorues standard para çdo testi
+        user = new User(1, "Artan", "artan@example.com", "Fjalekalimi123", new ArrayList<>());
     }
 
-    private static void testAutentikimiLogin() {
-        User user = new User(1, "Artan", "artan@example.com", "Fjalekalimi123", new ArrayList<>());
-
-        // Testo login me kredenciale të sakta
-        assert user.login("artan@example.com", "Fjalekalimi123") : "Gabim: Login duhet të ishte i suksesshëm";
-
-        // Testo login me fjalëkalim të gabuar
-        assert !user.login("artan@example.com", "gabim") : "Gabim: Login nuk duhet të lejohej me password të gabuar";
-
-        // Testo login me email të gabuar
-        assert !user.login("tjeter@example.com", "Fjalekalimi123") : "Gabim: Login nuk duhet të lejohej me email të gabuar";
-
-        System.out.println("  - Testi i Autentikimit: OK");
+    @ParameterizedTest
+    @CsvSource({
+            "artan@example.com, Fjalekalimi123, true",
+            "artan@example.com, gabim, false",
+            "tjeter@example.com, Fjalekalimi123, false",
+            "'', '', false"
+    })
+    @DisplayName("Autentikimi me kombinime të ndryshme")
+    void testAutentikimiLogin(String email, String password, boolean rezultatiPritur) {
+        assertEquals(rezultatiPritur, user.login(email, password),
+                "Login dështoi për kredencialet: " + email + " / " + password);
     }
 
-    private static void testUpdateProfile() {
-        User user = new User();
-        user.setName("Blerina");
-        user.setEmail("blerina@test.com");
-
-        // Ndrysho emrin dhe emailin
+    @Test
+    @DisplayName("Përditësimi i profilit dhe validimi i fushave")
+    void testUpdateProfile() {
+        // Ndryshimi i rregullt
         user.updateProfile("Blerina K.", "blerina.new@test.com");
 
-        assert user.getName().equals("Blerina K.") : "Gabim: Emri nuk u përditësua";
-        assert user.getEmail().equals("blerina.new@test.com") : "Gabim: Emaili nuk u përditësua";
-        assert user.getUpdatedAt() != null : "Gabim: updatedAt duhet të ishte plotësuar";
+        assertAll("Përditësimi i suksesshëm",
+                () -> assertEquals("Blerina K.", user.getName()),
+                () -> assertEquals("blerina.new@test.com", user.getEmail()),
+                () -> assertNotNull(user.getUpdatedAt(), "Timestamp duhet të gjenerohet")
+        );
 
-        // Testo që inputet boshe nuk e mbishkruajnë të dhënën ekzistuese
+        // Testo mbrojtjen nga overwrite me vlera boshe
         user.updateProfile("", null);
-        assert user.getName().equals("Blerina K.") : "Gabim: Emri nuk duhet të bëhej bosh";
-
-        System.out.println("  - Testi i Përditësimit të Profilit: OK");
+        assertEquals("Blerina K.", user.getName(), "Emri nuk duhet të mbishkruhet me vlerë boshe");
     }
 
-    private static void testMenaxhimiRoleve() {
-        User user = new User();
-        Role adminRole = new Role(1, "ADMIN");
-        Role editorRole = new Role(2, "EDITOR");
+    @Nested
+    @DisplayName("Menaxhimi i Roleve (RBAC)")
+    class RoleManagement {
 
-        // Shto role
-        user.addRole(adminRole);
-        user.addRole(editorRole);
+        @Test
+        @DisplayName("Shtimi dhe kontrolli i roleve (Case-Insensitive)")
+        void testAddAndHasRole() {
+            Role adminRole = new Role(1, "ADMIN");
+            user.addRole(adminRole);
 
-        // Testo hasRole (duhet të jetë case-insensitive sipas kodit tënd)
-        assert user.hasRole("admin") : "Gabim: Përdoruesi duhet të kishte rolin ADMIN";
-        assert user.hasRole("EDITOR") : "Gabim: Përdoruesi duhet të kishte rolin EDITOR";
+            assertAll("Kontrolli i roleve",
+                    () -> assertTrue(user.hasRole("ADMIN")),
+                    () -> assertTrue(user.hasRole("admin"), "Duhet të jetë case-insensitive"),
+                    () -> assertFalse(user.hasRole("EDITOR"), "Përdoruesi nuk duhet të ketë role që s'i janë dhënë")
+            );
+        }
 
-        // Testo heqjen e rolit
-        user.removeRole(adminRole);
-        assert !user.hasRole("ADMIN") : "Gabim: Roli ADMIN duhet të ishte hequr";
-
-        System.out.println("  - Testi i Menaxhimit të Roleve: OK");
+        @Test
+        @DisplayName("Heqja e rolit nga përdoruesi")
+        void testRemoveRole() {
+            Role role = new Role(2, "EDITOR");
+            user.addRole(role);
+            user.removeRole(role);
+            assertFalse(user.hasRole("EDITOR"));
+        }
     }
 
-    private static void testInicializimiListave() {
-        User user = new User();
+    @Test
+    @DisplayName("Inicializimi i listave (Null-Safe Check)")
+    void testInicializimiListave() {
+        User userRi = new User();
 
-        // Verifikojmë që të gjitha listat janë inicializuar në konstruktor (jo null)
-        assert user.getRoles() != null;
-        assert user.getRezervimet() != null;
-        assert user.getPagesat() != null;
-        assert user.getVleresimet() != null;
-        assert user.getNotifikimet() != null;
-        assert user.getKontaktet() != null;
-
-        System.out.println("  - Testi i Inicializimit të Listave: OK");
+        assertAll("Inicializimi i koleksioneve në konstruktor",
+                () -> assertNotNull(userRi.getRoles()),
+                () -> assertNotNull(userRi.getRezervimet()),
+                () -> assertNotNull(userRi.getPagesat()),
+                () -> assertNotNull(userRi.getVleresimet()),
+                () -> assertNotNull(userRi.getNotifikimet()),
+                () -> assertNotNull(userRi.getKontaktet())
+        );
     }
 }
