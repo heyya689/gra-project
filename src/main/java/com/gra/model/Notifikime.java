@@ -1,8 +1,13 @@
 package com.gra.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Notifikime {
+    // Lista e vëzhguesve
+    private static List<NotificationObserver> observers = new ArrayList<>();
+
     private int njoftimId;
     private User user;
     private String titulli;
@@ -11,6 +16,24 @@ public class Notifikime {
     private boolean lexuar;
     private LocalDateTime data;
 
+    // --- METODAT E OBSERVER PATTERN ---
+    public static void attach(NotificationObserver observer) {
+        if (observer != null && !observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    public static void detach(NotificationObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (NotificationObserver observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // --- KONSTRUKTORËT ---
     public Notifikime() {
         this.lexuar = false;
         this.data = LocalDateTime.now();
@@ -24,12 +47,13 @@ public class Notifikime {
         this.mesazh = mesazh;
     }
 
+    // --- METODAT KRYESORE ---
     public void send() {
         System.out.println("Dërgohet njoftimi: " + titulli);
         System.out.println("Për: " + (user != null ? user.getEmail() : "Unknown"));
-        System.out.println("Mesazhi: " + mesazh);
 
-        // Në aplikacion real, kjo do të dërgohej në email/push notification
+        // Njoftojmë vëzhguesit automatikisht
+        notifyObservers();
     }
 
     public void markAsRead() {
@@ -44,7 +68,7 @@ public class Notifikime {
     }
 
     public String getPreview() {
-        if (mesazh.length() > 50) {
+        if (mesazh != null && mesazh.length() > 50) {
             return mesazh.substring(0, 47) + "...";
         }
         return mesazh;
@@ -59,7 +83,7 @@ public class Notifikime {
         return data.isAfter(twentyFourHoursAgo);
     }
 
-    // Getters and Setters
+    // --- GETTERS AND SETTERS ---
     public int getNjoftimId() { return njoftimId; }
     public void setNjoftimId(int njoftimId) { this.njoftimId = njoftimId; }
 
