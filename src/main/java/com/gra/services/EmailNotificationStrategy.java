@@ -15,7 +15,7 @@ class EmailNotificationStrategy implements NotificationStrategy {
 class SMSNotificationStrategy implements NotificationStrategy {
     @Override
     public void sendMessage(Notifikime njoftim) {
-        System.out.println("📱 Duke dërguar SMS te përdoruesi: " + njoftim.getUser().getEmri());
+        System.out.println("📱 Duke dërguar SMS te përdoruesi: " + njoftim.getUser().getName());
         System.out.println("Mesazhi: " + njoftim.getPreview());
     }
 }

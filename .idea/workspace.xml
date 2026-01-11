@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="ALL TESTS FIXED">
+    <list default="true" id="4618d161-2133-4e03-bc51-a46720e14f0e" name="Changes" comment="STRATEGY AND OBSERVER PATTERN FIXED">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gra/model/Notifikime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gra/model/Notifikime.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -102,7 +101,7 @@
       <recent name="com.gra.tester" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.tester">
+  <component name="RunManager" selected="JUnit.All in gra-project">
     <configuration name="MainApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gra.app.MainApp" />
       <module name="gra-project" />
@@ -151,14 +150,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in gra-project (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="gra-project" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in gra-project (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gra-project" />
       <option name="PACKAGE_NAME" value="" />
@@ -175,15 +166,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="com.gra.app in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gra-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gra.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.gra.app" />
+      <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -203,6 +188,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="com.gra.tester in gra-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gra-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gra.tester.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gra.tester" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.tester" />
       <item itemvalue="Application.model" />
@@ -210,19 +209,19 @@
       <item itemvalue="Application.TestConnection" />
       <item itemvalue="Application.SimpleTest" />
       <item itemvalue="Application.MainApp" />
-      <item itemvalue="JUnit.All in gra-project (1)" />
+      <item itemvalue="JUnit.All in gra-project" />
+      <item itemvalue="JUnit.com.gra.tester in gra-project" />
       <item itemvalue="JUnit.All in gra-project (2)" />
       <item itemvalue="JUnit.All in gra-project (3)" />
-      <item itemvalue="JUnit.com.gra.app in gra-project" />
       <item itemvalue="JUnit.com.gra.db in gra-project" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in gra-project" />
+        <item itemvalue="JUnit.com.gra.tester in gra-project" />
         <item itemvalue="JUnit.All in gra-project (3)" />
         <item itemvalue="JUnit.All in gra-project (2)" />
         <item itemvalue="JUnit.com.gra.db in gra-project" />
-        <item itemvalue="JUnit.com.gra.app in gra-project" />
-        <item itemvalue="JUnit.All in gra-project (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -258,7 +257,7 @@
       <workItem from="1767871838796" duration="2463000" />
       <workItem from="1767874349015" duration="11591000" />
       <workItem from="1768153024200" duration="4072000" />
-      <workItem from="1768160433385" duration="617000" />
+      <workItem from="1768160433385" duration="1985000" />
     </task>
     <task id="LOCAL-00001" summary="KEJDA_INITIAL STRUCTURE">
       <option name="closed" value="true" />
@@ -316,7 +315,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768156570080</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="STRATEGY AND OBSERVER PATTERN FIXED">
+      <option name="closed" value="true" />
+      <created>1768161207451</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1768161207451</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,7 +376,8 @@
     <MESSAGE value="Many-to-Many table relationship fix attempt" />
     <MESSAGE value="SQL DUMP" />
     <MESSAGE value="ALL TESTS FIXED" />
-    <option name="LAST_COMMIT_MESSAGE" value="ALL TESTS FIXED" />
+    <MESSAGE value="STRATEGY AND OBSERVER PATTERN FIXED" />
+    <option name="LAST_COMMIT_MESSAGE" value="STRATEGY AND OBSERVER PATTERN FIXED" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
